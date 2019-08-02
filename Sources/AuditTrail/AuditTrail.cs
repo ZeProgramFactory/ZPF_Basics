@@ -399,6 +399,13 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
             return "#FF800080" /*Brushes.Purple*/;
          }
       }
+
+      // - - -  - - -
+
+      public override string ToString()
+      {
+         return $"{TimeStamp.ToString("HH:mm:ss")} { (new String('*', (int)Level) + "----" ).Left(4) } {Tag.Left(10)} {Message}";
+      }
    }
 }
 
