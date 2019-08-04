@@ -289,11 +289,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       // - - -  - - - 
 
-#if SQLLITE
-      [SQLite.Net.Attributes.PrimaryKey]
-#else
       [DB_Attributes.PrimaryKey]
-#endif
       public Int64 PK { get; set; }
 
       public DateTime TimeStamp { get; set; }
@@ -302,11 +298,8 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       public ErrorLevel Level { get; set; }
 
-#if SQLLITE
-      [SQLite.Net.Attributes.Ignore]
-#else
+
       [DB_Attributes.Ignore]
-#endif
       public string sLevel
       {
          get
@@ -330,11 +323,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       public Int64 Ticks { get; set; }
 
-#if SQLLITE
-      [SQLite.Net.Attributes.Ignore]
-#else
       [DB_Attributes.Ignore]
-#endif
       public TimeSpan Duration
       {
          get => new TimeSpan(Ticks);
@@ -360,11 +349,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 #endif
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
-#if SQLLITE
-      [SQLite.Net.Attributes.IgnoreAttribute]
-#else
       [DB_Attributes.Ignore]
-#endif
       public bool HasData { get { return !string.IsNullOrEmpty(DataIn) || !string.IsNullOrEmpty(DataOut); } }
 
       // - - -  - - - 
@@ -408,205 +393,3 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
       }
    }
 }
-
-/* -------------------------------------------------------------------------------------------------------------------------------------- 
-
-#if WPF
-using System.Windows.Media;
-#endif
-
-namespace ZPF.Data
-{
-   public class AuditTrail
-   {
-
-      // - - -  - - - 
-
-#region SQLCreate
-      public static readonly string SQLCreate_SQLite =
-   @"
-CREATE TABLE AuditTrail (
-   PK             INTEGER PRIMARY KEY AUTOINCREMENT, 
-	TimeStamp      datetime       NOT NULL,
-
-   Parent         INTEGER        NULL,
-   IsBusiness     bool           DEFAULT 0,
-   Level          int            NOT NULL,
-   Tag            varchar(128)   NOT NULL,
-	Application    varchar(32)    NULL,
-   Message        varchar(1024)  NOT NULL,
-   Ticks          INTEGER        NULL,
-
-	DataIn         text           NULL,
-	DataInType     varchar(128)   NULL,
-	DataOut        text           NULL,
-	DataOutType    varchar(128)   NULL,
-
-	TerminalID     varchar(128)   NULL,
-	TerminalIP     varchar(128)   NULL,
-
-	FKUser         varchar(128)   NULL,
-	ItemID         varchar(128)   NULL,
-	ItemType       varchar(128)   NULL
-);
-
-CREATE VIEW [V_AuditTrail_Last100]
-AS
-SELECT TOP (100) PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
-FROM   AuditTrail
-ORDER BY PK DESC
-";
-
-      public static readonly string SQLCreate_MSSQL =
-   @"
-CREATE TABLE [AuditTrail](
-	[PK]           bigint IDENTITY(1000,1) NOT NULL,
-	[TimeStamp]    datetime NOT NULL,
-
-   Parent         bigint         NULL,
-   IsBusiness     bit           DEFAULT 0,
-   [Level]        int            NOT NULL,
-	[Tag]          varchar(128)   NOT NULL,
-	Application    varchar(32)    NULL,
-	[Message]      varchar(1024)  NOT NULL,
-	Ticks          bigint         NULL,
-
-	[DataIn]       text NULL,
-	[DataInType]   varchar(128) NULL,
-	[DataOut]      text NULL,
-	[DataOutType]  varchar(128) NULL,
-
-	[TerminalID]   varchar(128) NULL,
-	[TerminalIP]   varchar(128) NULL,
-
-	[FKUser]       varchar(128) NULL,
-	[ItemID]       varchar(128) NULL,
-	[ItemType]     varchar(128) NULL,
-CONSTRAINT PK_AuditTrail PRIMARY KEY(PK)
-);
-
-ALTER TABLE [AuditTrail] ADD  CONSTRAINT [DF_AuditTrail_TimeStamp]  DEFAULT (getdate()) FOR [TimeStamp];
-
-CREATE INDEX [IX_AuditTrail_Tag] ON [AuditTrail] ( [Tag] ASC );
-CREATE INDEX [IX_AuditTrail_TS]  ON [AuditTrail] ( [TimeStamp] ASC );
-CREATE INDEX [IX_AuditTrail_LEVEL]  ON [AuditTrail] ( [Level] ASC );
-CREATE INDEX [IX_AuditTrail_APP]  ON [AuditTrail] ( [Application] ASC );
-
-CREATE VIEW [V_AuditTrail_Last100]
-AS
-SELECT TOP (100) PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
-FROM   AuditTrail
-ORDER BY PK DESC;
-";
-
-      public static readonly string SQLCreate_MYSQL =
-   @"
-CREATE TABLE `AuditTrail` (
-	`PK`           bigint(20)     NOT NULL AUTO_INCREMENT,
-	`TimeStamp`    DATETIME       NOT NULL,
-
-   `Parent`       bigint(20)     NULL,
-   `IsBusiness`   bool           DEFAULT 0,
-	`Level`        INT(11)        NOT NULL,
-	`Tag`          VARCHAR(128)   NOT NULL,
-	`Application`  varchar(32)    NULL,
-	`Message`      VARCHAR(1024)  NOT NULL,
-	`Ticks`        bigint(20)     NULL,
-
-	`DataIn` TEXT NULL,
-	`DataInType` VARCHAR(128) NULL DEFAULT NULL,
-	`DataOut` TEXT NULL,
-	`DataOutType` VARCHAR(128) NULL DEFAULT NULL,
-
-	`TerminalID` VARCHAR(128) NULL DEFAULT NULL,
-	`TerminalIP` VARCHAR(128) NULL DEFAULT NULL,
-
-	`FKUser` VARCHAR(128) NULL DEFAULT NULL,
-	`ItemID` VARCHAR(128) NULL DEFAULT NULL,
-	`ItemType` VARCHAR(128) NULL DEFAULT NULL,
-
-	PRIMARY KEY (`PK`),
-	INDEX `Tag` (`Tag`),
-	INDEX `TimeStamp` (`TimeStamp`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB;
-";
-
-
-      public static readonly string SQLCreate_PGSQL =
-   @"
-
-   CREATE TABLE public.audittrail (
-  pk BIGSERIAL,
-  "timestamp" TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  parent BIGINT,
-  isbusiness BOOLEAN DEFAULT false,
-  level INTEGER NOT NULL,
-  tag VARCHAR(128) NOT NULL,
-  application VARCHAR(32),
-  message VARCHAR(1024) NOT NULL,
-  ticks BIGINT,
-  datain TEXT,
-  dataintype VARCHAR(128),
-  dataout TEXT,
-  dataouttype VARCHAR(128),
-  terminalid VARCHAR(128),
-  terminalip VARCHAR(128),
-  fkuser VARCHAR(128),
-  itemid VARCHAR(128),
-  itemtype VARCHAR(128),
-  timestampapp TIMESTAMP WITHOUT TIME ZONE,
-  fkstructure BIGINT DEFAULT '-1'::integer,
-  timestampdb TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-  CONSTRAINT pk_audittrail PRIMARY KEY(pk),
-  CONSTRAINT audittrail_fk FOREIGN KEY (fkstructure)
-    REFERENCES public.structure(pk)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-    NOT DEFERRABLE
-) 
-WITH (oids = true);
-
-CREATE INDEX ix_audittrail_app ON public.audittrail
-  USING btree (application COLLATE pg_catalog."default");
-
-CREATE INDEX ix_audittrail_level ON public.audittrail
-  USING btree (level);
-
-CREATE INDEX ix_audittrail_tag ON public.audittrail
-  USING btree (tag COLLATE pg_catalog."default");
-
-CREATE INDEX ix_audittrail_ts ON public.audittrail
-  USING btree ("timestamp");
-      ";
-
-#endregion
-
-
-      // - - -  - - - 
-
-      public AuditTrailList Copy2AuditTrailList()
-      {
-         AuditTrailList o = new AuditTrailList();
-         o.CopyPropertyValues(this, true);
-         return o;
-      }
-   }
-
-   public class AuditTrailList : AuditTrail
-   {
-      public string Login { get; set; }
-
-      // - - -  - - - 
-
-      public AuditTrail Copy2AuditTrail()
-      {
-         AuditTrail o = new AuditTrail();
-         o.CopyPropertyValues(this, true);
-         return o;
-      }
-   }
-}
-
-*/
