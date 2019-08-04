@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ZPF;
 
@@ -99,6 +99,41 @@ namespace ZPF
          file.Insert(0, "0");
 
          Assert.AreEqual("2", file[2]);
+      }
+
+      [TestMethod]
+      public void _00_NameValue_01()
+      {
+         TStrings file = new TStrings();
+         file["A"] = "1";
+         file["B"] = "2";
+         file["C"] = "3";
+
+         Assert.AreEqual("2", file["B"]);
+      }
+
+      [TestMethod]
+      public void _00_NameValue_02()
+      {
+         TStrings file = new TStrings();
+         file["A"] = "1";
+         file["B"] = "2";
+         file["C"] = "3";
+         file["B"] = "4";
+
+         Assert.AreEqual(3, file.Count );
+      }
+
+      [TestMethod]
+      public void _00_NameValue_03()
+      {
+         TStrings file = new TStrings();
+         file["A"] = "1";
+         file["B"] = "2";
+         file["C"] = "3";
+         file["B"] = "4";
+
+         Assert.AreEqual("4", file["B"]);
       }
    }
 }

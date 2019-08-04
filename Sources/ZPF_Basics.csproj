@@ -10,10 +10,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/ZeProgFactory/MediaPlayer/master/docs/ZeProgramFactory.Square.BG.png</PackageIconUrl>
     <PackageTags>Basics</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.8.112</Version>
+    <Version>1.1.9.1</Version>
     <Description>Basics ( V2 / .Net Standard 2.0 )</Description>
-    <AssemblyVersion>1.1.8.112</AssemblyVersion>
-    <FileVersion>1.1.8.112</FileVersion>
+    <AssemblyVersion>1.1.9.1</AssemblyVersion>
+    <FileVersion>1.1.9.1</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ZeProgFactory/ZPF_Basics</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
