@@ -4,10 +4,7 @@ using System.Linq;
 //using System.Threading.Tasks;
 using System.Reflection;
 using System.Diagnostics;
-
-#if !PCL
 using System.Data;
-#endif
 
 
 namespace ZPF
@@ -111,7 +108,7 @@ namespace ZPF
          }
       }
 
-#if !PCL && !NETCOREAPP1_0 && !NETSTANDARD1_2 && !NETSTANDARD1_3 && !NETSTANDARD1_4
+
       public static void CopyDataRowValues(this object destination, DataRow source, bool IgnoreCase = false, bool ToUniversalTime = false )
       {
          if (destination is IEnumerable)
@@ -348,6 +345,6 @@ namespace ZPF
             }
          }
       }
-#endif
+
    }
 }

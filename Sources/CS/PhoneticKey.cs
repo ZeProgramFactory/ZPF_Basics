@@ -143,27 +143,10 @@ namespace ZPF
          }
          string Result = text;
 
-#if WebService
-         string formD = text.Normalize(NormalizationForm.FormD);
-         StringBuilder sb = new StringBuilder();
 
-         foreach (char ch in formD)
-         {
-            UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(ch);
-            if (uc != UnicodeCategory.NonSpacingMark)
-            {
-               sb.Append(ch);
-            }
-         }
-
-         Result = sb.ToString().Normalize(NormalizationForm.FormC);
-#endif
-
-#if NETFX_CORE || NETSTANDARD2_0
          byte[] tempBytes;
          tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(text);
          Result = System.Text.Encoding.UTF8.GetString(tempBytes,0, text.Length);
-#endif
 
          return Result;
       }

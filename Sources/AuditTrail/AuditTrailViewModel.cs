@@ -78,8 +78,7 @@ namespace ZPF.AT
          {
             _Current = this;
          };
-
-         //Logs = new List<AuditTrail>();
+ 
          Logs = new ObservableCollection<AuditTrail>();
 
          Logs.Add(new AuditTrail { Message = "Welcome to AT ..." });
