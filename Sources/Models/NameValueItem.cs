@@ -28,6 +28,13 @@ namespace ZPF
       {
          return new NameValue { Name=Name, Value=Value, Tag=Tag };
       }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name}=(string){Value}";
+      }
    }
 
 
@@ -47,6 +54,13 @@ namespace ZPF
       public UInt64 Value { get; set; }
 
       public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name}=(UInt64){Value}";
+      }
    }
 
 
@@ -68,6 +82,13 @@ namespace ZPF
       public Int64 Value { get; set; }
 
       public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name}=(Int64){Value}";
+      }
    }
 
 
@@ -87,6 +108,13 @@ namespace ZPF
       public Decimal Value { get; set; }
 
       public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name}=(Decimal){Value}";
+      }
    }
 
 
@@ -106,6 +134,13 @@ namespace ZPF
       public Double Value { get; set; }
 
       public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name}=(Double){Value}";
+      }
    }
 
    public class NameValue_Point
@@ -126,6 +161,13 @@ namespace ZPF
       public Double Y { get; set; }
 
       public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name} (Double x,y) ({X},{Y})";
+      }
    }
 
    public class NameValue_Coord
@@ -146,5 +188,12 @@ namespace ZPF
       public Double Lon { get; set; }
 
       public object Tag = null;
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name} (Double Lat,Lon) ({Lat},{Lon})";
+      }
    }
 }
