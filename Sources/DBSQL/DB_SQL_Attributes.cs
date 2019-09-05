@@ -37,5 +37,13 @@ namespace ZPF.SQL
          {
          }
       }
+
+      [AttributeUsage(AttributeTargets.Class)]
+      public class TableNameAttribute : Attribute
+      {
+         public TableNameAttribute(string TableName)
+         {
+         }
+      }
    }
 }

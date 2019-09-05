@@ -13,6 +13,10 @@ Basics for .Net ( .Net Standard 2.0 )
 [ ] ...
 
 ## Changelog  
+### Version 1.1.10 - 09/2019
+ * Add: DB_Attributes.TableNameAttribute
+ * Add: EnumerableExtensions
+
 ### Version 1.1.9 - 08/2019
  * NameValue: override string ToString()
  * Open source ...
