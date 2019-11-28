@@ -30,6 +30,24 @@ namespace ZPF.SQL
       {
       }
 
+      [AttributeUsage(AttributeTargets.Class)]
+      public class TableNameAttribute : Attribute
+      {
+         public TableNameAttribute(string TableName)
+         {
+         }
+      }
+
+      [AttributeUsage(AttributeTargets.Class)]
+      public class CommentAttribute : Attribute
+      {
+         public CommentAttribute(string Comment)
+         {
+         }
+      }
+
+      // - - -  - - - 
+
       [AttributeUsage(AttributeTargets.Property)]
       public class MaxLengthAttribute : Attribute
       {
@@ -38,12 +56,11 @@ namespace ZPF.SQL
          }
       }
 
-      [AttributeUsage(AttributeTargets.Class)]
-      public class TableNameAttribute : Attribute
+      [AttributeUsage(AttributeTargets.Property)]
+      public class IsMandatoryAttribute : Attribute
       {
-         public TableNameAttribute(string TableName)
-         {
-         }
       }
+
+      // - - -  - - - 
    }
 }
