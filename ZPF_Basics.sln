@@ -5,10 +5,11 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPF_Basics", "Sources\ZPF_Basics.csproj", "{732BDEC6-1015-49C9-9CB3-74C8F9985432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPF_Basics_UT", "ZPF_Basics_UT\ZPF_Basics_UT.csproj", "{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPF_Basics_UT", "ZPF_Basics_UT\ZPF_Basics_UT.csproj", "{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{927739D5-C90B-471E-B971-BEC5FDDBC34A}"
 	ProjectSection(SolutionItems) = preProject
+		n2.bat = n2.bat
 		README.md = README.md
 	EndProjectSection
 EndProject
