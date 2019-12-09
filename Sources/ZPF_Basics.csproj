@@ -10,10 +10,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/ZeProgFactory/MediaPlayer/master/docs/ZeProgramFactory.Square.BG.png</PackageIconUrl>
     <PackageTags>Basics</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.11.7</Version>
+    <Version>1.1.11.9</Version>
     <Description>Basics ( V2 / .Net Standard 2.0 )</Description>
-    <AssemblyVersion>1.1.11.7</AssemblyVersion>
-    <FileVersion>1.1.11.7</FileVersion>
+    <AssemblyVersion>1.1.11.9</AssemblyVersion>
+    <FileVersion>1.1.11.9</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ZeProgFactory/ZPF_Basics</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
@@ -31,10 +31,18 @@
     <Compile Remove="CS\TIniFile_UT.cs" />
     <Compile Remove="CS\TStrings_UT.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrail.cs" Link="AuditTrail\AuditTrail.cs" />
+    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrailViewModel.cs" Link="AuditTrail\AuditTrailViewModel.cs" />
+    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrail_Appli.cs" Link="AuditTrail\AuditTrail_Appli.cs" />
+    <Compile Include="..\..\..\_Units_\AuditTrail\DebugAuditTrailWriter.cs" Link="AuditTrail\DebugAuditTrailWriter.cs" />
+    <Compile Include="..\..\..\_Units_\AuditTrail\IAuditTrailWriter.cs" Link="AuditTrail\IAuditTrailWriter.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="DBSQL\" />
+    <Folder Include="AuditTrail\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
