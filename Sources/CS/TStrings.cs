@@ -400,8 +400,7 @@ namespace ZPF
                   if ((pos != -1) && (st.Substring(0, pos).Trim().ToUpper().Replace(@"\R\N", "\r\n") == Name.ToUpper()))
                   {
                      return (Result);
-                  }
-                  ;
+                  };
                }
                else
                {
@@ -412,24 +411,18 @@ namespace ZPF
                      if (Name.ToUpper() == st.ToUpper())
                      {
                         return (Result);
-                     }
-                     ;
+                     };
                   }
                   else
                   {
                      if ((pos != -1) && (st.Substring(0, pos).ToUpper().Replace(@"\R\N", "\r\n") == Name.ToUpper()))
                      {
                         return (Result);
-                     }
-                     ;
-                  }
-                  ;
-               }
-               ;
-            }
-            ;
-         }
-         ;
+                     };
+                  };
+               };
+            };
+         };
 
          Result = -1;
 
@@ -451,8 +444,7 @@ namespace ZPF
             for (int i = Index; i < _Count - 1; i++)
             {
                InnerList.SetValue(InnerList.GetValue(i + 1), i);
-            }
-            ;
+            };
 
             _Count -= 1;
          };
@@ -941,8 +933,7 @@ namespace ZPF
             {
                return (i);
             }
-         }
-         ;
+         };
 
          return Result;
       }

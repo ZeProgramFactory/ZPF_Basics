@@ -143,6 +143,31 @@ namespace ZPF
       }
    }
 
+   public class NameValue_DateTime
+   {
+      public NameValue_DateTime()
+      {
+      }
+
+      public NameValue_DateTime(string name, DateTime dt)
+      {
+         this.Name = name;
+         this.Value = dt;
+      }
+
+      public string Name { get; set; }
+      public DateTime Value { get; set; }
+
+      public object Tag { get; set; }
+
+      // - - -  - - - 
+
+      public override string ToString()
+      {
+         return $"{Name} (DateTime) ({Value.ToString()})";
+      }
+   }
+
    public class NameValue_Point
    {
       public NameValue_Point()
