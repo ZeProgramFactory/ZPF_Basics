@@ -9,6 +9,8 @@ namespace ZPF.SQL
    /// 
    /// 2005..2020 ZePocketForge.com, SAS ZPF
    /// </summary>
+   public enum Alignments { left, center, right }
+
    public class DB_Attributes
    {
       [AttributeUsage(AttributeTargets.Property)]
@@ -65,26 +67,28 @@ namespace ZPF.SQL
       // - - - presentation - - - 
 
       [AttributeUsage(AttributeTargets.Property)]
-      public class HideKeyAttribute : Attribute
+      public class ShowAttribute : Attribute
       {
-      }
-
-      [AttributeUsage(AttributeTargets.Property)]
-      public class WidthAttribute : Attribute
-      {
-         public WidthAttribute(decimal Width)
+         public ShowAttribute(bool show)
          {
          }
-      }
 
-      public enum Alignments { left, center, right }
-
-      [AttributeUsage(AttributeTargets.Property)]
-      public class AlignmentAttribute : Attribute
-      {
-         public AlignmentAttribute(Alignments alignment)
+         public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false)
          {
+            Show = show;
+            Width = width;
+            Alignment = alignment;
+            Header = header;
+            FormatStr = formatStr;
+            HideIfNull = hideIfNull;
          }
+
+         public bool Show { get; }
+         public int Width { get; }
+         public Alignments Alignment { get; }
+         public string Header { get; }
+         public string FormatStr { get; }
+         public bool HideIfNull { get; }
       }
 
       // - - -  - - - 
