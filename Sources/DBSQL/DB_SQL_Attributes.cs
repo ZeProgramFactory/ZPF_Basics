@@ -5,8 +5,9 @@ namespace ZPF.SQL
    /// <summary>
    /// 11/05/17 - ME  - Add: IgnoreIntTypeAttribute
    /// 17/05/17 - ME  - Add: IgnoreBoolTypeAttribute
+   /// 02/06/20 - ME  - Add: presentation attributes
    /// 
-   /// 2005..2019 ZePocketForge.com, SAS ZPF
+   /// 2005..2020 ZePocketForge.com, SAS ZPF
    /// </summary>
    public class DB_Attributes
    {
@@ -59,6 +60,31 @@ namespace ZPF.SQL
       [AttributeUsage(AttributeTargets.Property)]
       public class IsMandatoryAttribute : Attribute
       {
+      }
+
+      // - - - presentation - - - 
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class HideKeyAttribute : Attribute
+      {
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class WidthAttribute : Attribute
+      {
+         public WidthAttribute(decimal Width)
+         {
+         }
+      }
+
+      public enum Alignments { left, center, right }
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class AlignmentAttribute : Attribute
+      {
+         public AlignmentAttribute(Alignments alignment)
+         {
+         }
       }
 
       // - - -  - - - 
