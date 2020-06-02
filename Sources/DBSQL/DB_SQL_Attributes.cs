@@ -73,7 +73,7 @@ namespace ZPF.SQL
          {
          }
 
-         public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false)
+         public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false, bool isBold = false )
          {
             Show = show;
             Width = width;
@@ -81,6 +81,7 @@ namespace ZPF.SQL
             Header = header;
             FormatStr = formatStr;
             HideIfNull = hideIfNull;
+            IsBold = isBold;
          }
 
          public bool Show { get; }
@@ -89,6 +90,7 @@ namespace ZPF.SQL
          public string Header { get; }
          public string FormatStr { get; }
          public bool HideIfNull { get; }
+         public bool IsBold { get; }
       }
 
       // - - -  - - - 
