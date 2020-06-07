@@ -67,6 +67,14 @@ namespace ZPF.SQL
       // - - - presentation - - - 
 
       [AttributeUsage(AttributeTargets.Property)]
+      public class DisplayOrderAttribute : Attribute
+      {
+         public DisplayOrderAttribute(int DisplayOrder)
+         {
+         }
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
       public class ShowAttribute : Attribute
       {
          public ShowAttribute(bool show)
