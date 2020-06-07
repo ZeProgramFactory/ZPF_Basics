@@ -69,9 +69,12 @@ namespace ZPF.SQL
       [AttributeUsage(AttributeTargets.Property)]
       public class DisplayOrderAttribute : Attribute
       {
-         public DisplayOrderAttribute(int DisplayOrder)
+         public DisplayOrderAttribute(int displayOrder)
          {
+            DisplayOrder = displayOrder;
          }
+
+         public int DisplayOrder { get; }
       }
 
       [AttributeUsage(AttributeTargets.Property)]
@@ -79,6 +82,7 @@ namespace ZPF.SQL
       {
          public ShowAttribute(bool show)
          {
+            Show = show;
          }
 
          public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false, bool isBold = false )
