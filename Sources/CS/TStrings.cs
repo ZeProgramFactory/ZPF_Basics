@@ -198,7 +198,7 @@ namespace ZPF
       /// <returns></returns>
       public Object GetObject(int Index)
       {
-         Check(Index); 
+         Check(Index);
 
          return (InnerList.GetValue(Index) as TStringsItem).FObject;
       }
@@ -245,7 +245,7 @@ namespace ZPF
       /// <param name="Obj"></param>
       public void SetObject(int Index, Object Obj)
       {
-         Check(Index); 
+         Check(Index);
 
          TStringsItem si = InnerList.GetValue(Index) as TStringsItem;
          si.FObject = Obj;
@@ -294,11 +294,11 @@ namespace ZPF
       public int Add(string st)
       {
          TStringsItem StringItem = new TStringsItem();
-         StringItem.FString = st; 
+         StringItem.FString = st;
          int Result = -1;
 
          if (_Count + 1 > InnerList.Length)
-         { 
+         {
             Array tmp = Array.CreateInstance(Type.GetType(typeof(TStringsItem).AssemblyQualifiedName), InnerList.Length + NEW_SIZE);
 
             InnerList.CopyTo(tmp, 0);
@@ -308,7 +308,7 @@ namespace ZPF
          InnerList.SetValue(new TStringsItem(st), _Count);
          Result = _Count;
 
-         _Count += 1; 
+         _Count += 1;
 
          return (Result);
       }
@@ -620,7 +620,7 @@ namespace ZPF
             {
                if (i < 0)
                {
-                  i = Add(Name + "=" + value);
+                  Add(Name + "=" + value);
                }
                else
                {
@@ -1012,10 +1012,7 @@ namespace ZPF
                case ' ':
                   if (IsEven(QuotationMark))
                   {
-                     //if (i < JSON.Length - 1 && JSON[i + 1] != ' ')
-                     //{
-                     //   Result += JSON[i];
-                     //};
+                     // nothing to do
                   }
                   else
                   {
@@ -1053,22 +1050,6 @@ namespace ZPF
          return value % 2 != 0;
       }
       #endregion
-
-      private static int CountOf(string Text, string Pattern)
-      {
-         // Loop through all instances of the string 'text'.
-         int Result = 0;
-         int i = 0;
-
-         while ((i = Text.IndexOf(Pattern, i)) != -1)
-         {
-            i += Pattern.Length;
-            Result++;
-         }
-         ;
-
-         return Result;
-      }
 
       /******************************************************************************/
 

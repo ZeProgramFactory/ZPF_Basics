@@ -102,6 +102,9 @@ namespace ZPF
                   case 'W': c = 'V'; break;
                   case 'Y': c = 'I'; break;
                   case 'Z': c = 'S'; break;
+                  default:
+                     // otherwise nothing to do
+                     break;
                };
 
                tmp = tmp + c;
@@ -138,17 +141,13 @@ namespace ZPF
       public static string RemoveDiacritics(string text)
       {
          if (string.IsNullOrEmpty(text))
-         { 
-            return ""; 
-         }
-         string Result = text;
+         {
+            return "";
+         };
 
+         byte[] tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(text);
 
-         byte[] tempBytes;
-         tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(text);
-         Result = System.Text.Encoding.UTF8.GetString(tempBytes,0, text.Length);
-
-         return Result;
+         return System.Text.Encoding.UTF8.GetString(tempBytes, 0, text.Length);
       }
 
       public static string Text2PhonKey(string Source, bool joker, bool Numbers)

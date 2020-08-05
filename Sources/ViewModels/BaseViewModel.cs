@@ -59,38 +59,6 @@ namespace ZPF
          }
       }
 
-      //protected bool OnPropertyChanged( ref object prop, object value, [CallerMemberName] string propertyName = null )
-      //{
-      //   if (GetPropValue(this, propertyName) != value)
-      //   {
-      //      prop = value;
-      //      // SetPropValue(this, propertyName, value);
-
-      //      var handler = PropertyChanged;
-      //      if (handler != null)
-      //      {
-      //         handler(this, new PropertyChangedEventArgs(propertyName));
-      //      }
-
-      //      return true;
-      //   }
-      //   else
-      //   {
-      //   };
-
-      //   return false;
-      //}
-
-      //public static object GetPropValue(object src, string propName)
-      //{
-      //   return src.GetType().GetProperty(propName).GetValue(src, null);
-      //}
-
-      //public static void SetPropValue(object src, string propName, object value)
-      //{
-      //   src.GetType().GetProperty(propName).SetValue( src, value);
-      //}
-
       #endregion
 
       protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -132,19 +100,6 @@ namespace ZPF
             return false;
          };
       }
-
-//#if !PCL && !WebService && !WINCE && !IOT && !NETCOREAPP1_0 && !NETSTANDARD2_0
-//      private DependencyObject _DependencyObject = null;
-//      [ZPF.DB_Attributes.Ignore]
-//      protected bool IsInDesignMode
-//      {
-//         get
-//         {
-//            if (_DependencyObject == null) _DependencyObject = new DependencyObject();
-//            return System.ComponentModel.DesignerProperties.GetIsInDesignMode(_DependencyObject);
-//         }
-//      }
-//#endif
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
    }

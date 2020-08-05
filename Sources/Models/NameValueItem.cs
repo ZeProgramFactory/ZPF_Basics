@@ -212,7 +212,7 @@ namespace ZPF
       public Double Lat { get; set; }
       public Double Lon { get; set; }
 
-      public object Tag = null;
+      public object Tag { get; set; } = null;
 
       // - - -  - - - 
 
