@@ -12,10 +12,12 @@ Basics for .Net ( .Net Standard 2.0 )
 ## Roadmap
 [ ] ...
 
+
+
 ## Changelog  
 ### Version 1.1.11 - 05/2020
  * Add: NameValue_DateTime
- 
+
  ### Version 1.1.10 - 09/2019
  * Add: DB_Attributes.TableNameAttribute
  * Add: EnumerableExtensions
@@ -26,6 +28,6 @@ Basics for .Net ( .Net Standard 2.0 )
  * Code review ...
  * Add some unit tests ...
    
-  
+
 ### Version 1.1.6 - 07/2019  
  * Comming out ...
