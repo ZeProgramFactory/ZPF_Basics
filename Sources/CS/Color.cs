@@ -59,14 +59,14 @@ namespace ZPF
       /// <summary>
       /// Gets the alpha component of the color.
       /// </summary>
-      public decimal Alpha 
-      { 
+      public decimal Alpha
+      {
          get => _Alpha;
          set
          {
             _Alpha = value;
 
-            if ( _Alpha > 1 )
+            if (_Alpha > 1)
             {
                _Alpha = value / 255;
             };
@@ -136,6 +136,20 @@ namespace ZPF
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
+      public string ToHex(byte NbDigits = 8)
+      {
+         if (NbDigits == 6)
+         {
+            return $"{(byte)(_Red * 255):x2}{(byte)(_Green * 255):x2}{(byte)(_Blue * 255):x2}";
+         }
+         else
+         {
+            return $"{(byte)(_Alpha * 255):x2}{(byte)(_Red * 255):x2}{(byte)(_Green * 255):x2}{(byte)(_Blue * 255):x2}";
+         };
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
       /// <summary>
       /// Gets the red component of the color.
       /// </summary>
@@ -196,7 +210,7 @@ namespace ZPF
 
       public override string ToString()
       {
-         return $"{(byte)(_Alpha * 255):x2}{(byte)(_Red * 255):x2}{(byte)(_Green * 255):x2}{(byte)(_Blue * 255):x2}";
+         return ToHex();
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
