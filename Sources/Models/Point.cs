@@ -1,4 +1,4 @@
-﻿namespace ZPF.PCL
+﻿namespace ZPF
 {
    public class PointI 
    {
