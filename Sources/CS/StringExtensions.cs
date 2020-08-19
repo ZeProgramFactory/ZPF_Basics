@@ -11,6 +11,12 @@ namespace ZPF
    {
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
+      /// <summary>
+      /// Returns a string containing a specified number of characters from the left side of a string.
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="Nb"></param>
+      /// <returns></returns>
       public static string Left(this string source, int Nb)
       {
 
@@ -39,6 +45,12 @@ namespace ZPF
          return Result;
       }
 
+      /// <summary>
+      /// Returns a string containing a specified number of characters from the right side of a string.
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="Nb"></param>
+      /// <returns></returns>
       public static string Right(this string source, int Nb)
       {
          string Result = source;
@@ -58,6 +70,39 @@ namespace ZPF
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
+      /// <summary>
+      /// Returns the specified number first lines of a text.
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="Nb"></param>
+      /// <returns></returns>
+      public static string Top(this string source, int Nb)
+      {
+         if (string.IsNullOrEmpty(source))
+         {
+            return source;
+         };
+
+         string Result = "";
+
+         var list = new TStrings();
+         list.Text = source;
+
+         for( int i=0; i < Nb && i < list.Count; i++)
+         {
+            Result = Result + list[i] + Environment.NewLine;
+         };
+
+         return Result;
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      /// <summary>
+      /// Returns the first line of a text.
+      /// </summary>
+      /// <param name="source"></param>
+      /// <returns></returns>
       public static string FirstLine(this string source)
       {
          if (string.IsNullOrEmpty(source))
