@@ -32,11 +32,13 @@
     <Compile Remove="CS\TStrings_UT.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrail.cs" Link="AuditTrail\AuditTrail.cs" />
-    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrailViewModel.cs" Link="AuditTrail\AuditTrailViewModel.cs" />
-    <Compile Include="..\..\..\_Units_\AuditTrail\AuditTrail_Appli.cs" Link="AuditTrail\AuditTrail_Appli.cs" />
-    <Compile Include="..\..\..\_Units_\AuditTrail\DebugAuditTrailWriter.cs" Link="AuditTrail\DebugAuditTrailWriter.cs" />
-    <Compile Include="..\..\..\_Units_\AuditTrail\IAuditTrailWriter.cs" Link="AuditTrail\IAuditTrailWriter.cs" />
+    <Compile Include="..\AuditTrail\AuditTrail.cs" Link="AuditTrail\AuditTrail.cs" />
+    <Compile Include="..\AuditTrail\AuditTrailViewModel.cs" Link="AuditTrail\AuditTrailViewModel.cs" />
+    <Compile Include="..\AuditTrail\AuditTrail_Appli.cs" Link="AuditTrail\AuditTrail_Appli.cs" />
+    <Compile Include="..\AuditTrail\DebugAuditTrailWriter.cs" Link="AuditTrail\DebugAuditTrailWriter.cs" />
+    <Compile Include="..\AuditTrail\FileAuditTrailWriter.cs" Link="AuditTrail\FileAuditTrailWriter.cs" />
+    <Compile Include="..\AuditTrail\IAuditTrailWriter.cs" Link="AuditTrail\IAuditTrailWriter.cs" />
+    <Compile Include="..\AuditTrail\JSONAuditTrailWriter.cs" Link="AuditTrail\JSONAuditTrailWriter.cs" />
   </ItemGroup>
 
   <ItemGroup>
