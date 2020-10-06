@@ -4,47 +4,83 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace ZPF.AT
 {
    public class JSONAuditTrailWriter : IAuditTrailWriter
    {
       private readonly string outputFile;
-      private readonly bool DebugOutput;
+
+      public enum FileTypes { FullJSON, PartialJSON }
+      private readonly FileTypes _FileType;
 
       /// <summary>
       /// 
       /// </summary>
       /// <param name="outputFile"></param>
       /// <param name="DebugOutput">if or if not System.Diagnostics.Debug.WriteLine</param>
-      public JSONAuditTrailWriter(string outputFile, bool DebugOutput = true)
+      public JSONAuditTrailWriter(string outputFile, FileTypes fileType = FileTypes.FullJSON)
       {
          this.outputFile = outputFile ?? throw new ArgumentNullException(nameof(outputFile));
-         this.DebugOutput = DebugOutput;
+         this._FileType = fileType;
       }
 
       public void Clean(AuditTrailViewModel sender)
       {
-         try
+         if (_FileType == FileTypes.FullJSON)
          {
-            TStrings Lines = new TStrings();
-
-            Lines.LoadFromFile(outputFile);
-
-            while (Lines.Count > sender.MaxLines)
+            try
             {
-               Lines.Delete(0);
+               string json = File.ReadAllText(outputFile);
+
+               var Lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
+
+               while (Lines.Count() > sender.MaxLines)
+               {
+                  Lines.RemoveAt(0);
+               };
+
+               json = JsonSerializer.Serialize(Lines);
+
+               File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
+            }
+            catch (Exception ex)
+            {
+               Debug.WriteLine(ex.Message);
+
+               if (Debugger.IsAttached)
+               {
+                  Debugger.Break();
+               };
             };
-
-            Lines.SaveToFile(outputFile, System.Text.Encoding.ASCII);
          }
-         catch (Exception ex)
+         else
          {
-            Debug.WriteLine(ex.Message);
-
-            if (Debugger.IsAttached)
+            try
             {
-               Debugger.Break();
+               string json = File.ReadAllText(outputFile);
+               json = json + "}";
+
+               var Lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
+
+               while (Lines.Count() > sender.MaxLines)
+               {
+                  Lines.RemoveAt(0);
+               };
+
+               json = JsonSerializer.Serialize(Lines);
+
+               File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
+            }
+            catch (Exception ex)
+            {
+               Debug.WriteLine(ex.Message);
+
+               if (Debugger.IsAttached)
+               {
+                  Debugger.Break();
+               };
             };
          };
       }
@@ -56,22 +92,64 @@ namespace ZPF.AT
 
       public void WriteLine(AuditTrailViewModel sender, AuditTrail message)
       {
-         try
+         if (_FileType == FileTypes.FullJSON)
          {
-            string Line = sender.FormatLine(message);
-
-            if (DebugOutput) System.Diagnostics.Debug.WriteLine(Line);
-
-            File.AppendAllLines(outputFile, new[] { Line });
-
-            if ((message.Level == ErrorLevel.Critical) && (string.IsNullOrEmpty(message.DataOut)))
+            try
             {
-               File.AppendAllLines(outputFile, new[] { message.DataOut + Environment.NewLine });
+               string json = File.ReadAllText(outputFile);
+
+               List<AuditTrail> lines = null;
+
+               if (string.IsNullOrEmpty(json))
+               {
+                  lines = new List<AuditTrail>();
+               }
+               else
+               {
+                  lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
+               };
+
+               lines.Add(message);
+
+               json = JsonSerializer.Serialize(lines, new JsonSerializerOptions
+               {
+                  IgnoreNullValues = true,
+               });
+
+               File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
+            }
+            catch (Exception ex)
+            {
+               Debug.WriteLine(ex.Message);
+
+               if (Debugger.IsAttached)
+               {
+                  Debugger.Break();
+               };
             };
          }
-         catch (Exception ex)
+         else
          {
-            System.Diagnostics.Debug.WriteLine("AuditTrailViewModel: " + ex.Message);
+            try
+            {
+               string Line = JsonSerializer.Serialize(message, new JsonSerializerOptions
+               {
+                  IgnoreNullValues = true,
+               });
+
+               if (System.IO.File.Exists(outputFile))
+               {
+                  File.AppendAllLines(outputFile, new[] { "," + Line });
+               }
+               else
+               {
+                  File.AppendAllLines(outputFile, new[] { "{" + Line });
+               };
+            }
+            catch (Exception ex)
+            {
+               System.Diagnostics.Debug.WriteLine("AuditTrailViewModel: " + ex.Message);
+            };
          };
       }
 

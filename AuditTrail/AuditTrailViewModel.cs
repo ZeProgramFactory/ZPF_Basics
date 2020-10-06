@@ -90,6 +90,10 @@ namespace ZPF.AT
 
       private IAuditTrailWriter auditTrailWriter = null;
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="messageWriter">AuditTrailWriter ... if null in memory tracing (Logs)</param>
       public void Init(IAuditTrailWriter messageWriter)
       {
          auditTrailWriter = messageWriter;

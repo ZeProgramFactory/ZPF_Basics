@@ -42,10 +42,39 @@ namespace ZPF.AT
          AuditTrailViewModel.Current.Init(null);
          AuditTrailViewModel.Current.Logs.Clear();
 
+
          Log.Write(new AuditTrail { Message = "mess0" });
          Log.Write(ErrorLevel.Info, "mess1");
          Log.Write("tag", "mess2");
          Log.Write(ErrorLevel.Info, new Exception("mess3"));
+
+
+         Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      [TestMethod]
+      public void AuditTrail_JSON()
+      {
+         var path = System.IO.Path.GetTempFileName();
+
+         AuditTrailViewModel.Current.Init(new JSONAuditTrailWriter(path));
+         AuditTrailViewModel.Current.Logs.Clear();
+
+         var DT = DateTime.Now;
+
+         for (int i = 0; i < 300; i++)
+         {
+            Log.Write(new AuditTrail { Message = "mess0" });
+            Log.Write(ErrorLevel.Info, "mess1");
+            Log.Write("tag", "mess2");
+            Log.Write(ErrorLevel.Info, new Exception("mess3"));
+         };
+
+         var ts = DateTime.Now - DT;
+         Log.Write(ErrorLevel.Info, ts.TotalSeconds.ToString());
+
 
          Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
       }

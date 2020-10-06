@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Text.Json.Serialization;
 using ZPF;
 using ZPF.SQL;
 
@@ -293,12 +294,14 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
       public Int64 PK { get; set; }
 
       public DateTime TimeStamp { get; set; }
+      [JsonIgnore]
       public DateTime TimeStampApp { get; set; }
+      [JsonIgnore]
       public DateTime TimeStampDB { get; set; }
 
       public ErrorLevel Level { get; set; }
 
-
+      [JsonIgnore]
       [DB_Attributes.Ignore]
       public string sLevel
       {
@@ -323,6 +326,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       public Int64 Ticks { get; set; }
 
+      [JsonIgnore]
       [DB_Attributes.Ignore]
       public TimeSpan Duration
       {
@@ -349,11 +353,13 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 #endif
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
+      [JsonIgnore]
       [DB_Attributes.Ignore]
       public bool HasData { get { return !string.IsNullOrEmpty(DataIn) || !string.IsNullOrEmpty(DataOut); } }
 
       // - - -  - - - 
 
+      [JsonIgnore]
       [DB_Attributes.Ignore]
       public string Foreground
       {
@@ -368,6 +374,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
          }
       }
 
+      [JsonIgnore]
       [DB_Attributes.Ignore]
       public string Background
       {
