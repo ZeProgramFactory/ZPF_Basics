@@ -87,6 +87,62 @@ namespace ZPF.AT
 
       public ObservableCollection<AuditTrail> LoadAuditTrail(AuditTrailViewModel sender, bool Filtered = true, long MaxRecords = 500)
       {
+         if (_FileType == FileTypes.FullJSON)
+         {
+            try
+            {
+               string json = File.ReadAllText(outputFile);
+
+               var lines = JsonSerializer.Deserialize<ObservableCollection<AuditTrail>>(json);
+
+               //ToDo: filter
+
+               while (lines.Count() > MaxRecords)
+               {
+                  lines.RemoveAt(0);
+               };
+
+               return lines;
+            }
+            catch (Exception ex)
+            {
+               Debug.WriteLine(ex.Message);
+
+               if (Debugger.IsAttached)
+               {
+                  Debugger.Break();
+               };
+            };
+         }
+         else
+         {
+            try
+            {
+               string json = File.ReadAllText(outputFile);
+               json = json + "}";
+
+               var lines = JsonSerializer.Deserialize<ObservableCollection<AuditTrail>>(json);
+
+               //ToDo: filter
+
+               while (lines.Count() > MaxRecords)
+               {
+                  lines.RemoveAt(0);
+               };
+
+               return lines;
+            }
+            catch (Exception ex)
+            {
+               Debug.WriteLine(ex.Message);
+
+               if (Debugger.IsAttached)
+               {
+                  Debugger.Break();
+               };
+            };
+         };
+
          return sender.Logs;
       }
 
@@ -164,5 +220,6 @@ namespace ZPF.AT
          AuditTrail at = new AuditTrail { Level = errorLevel, Message = message, DataOutType = dataOutType, DataOut = dataOut };
          WriteLine(sender, at);
       }
+
    }
 }
