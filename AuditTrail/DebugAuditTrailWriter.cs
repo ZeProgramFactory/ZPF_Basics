@@ -20,7 +20,6 @@ namespace ZPF.AT
       public void WriteLine(AuditTrailViewModel sender, AuditTrail message)
       {
          System.Diagnostics.Debug.WriteLine(message.Message);
-         //sender.LogsAdd(message);
       }
 
       public long Begin(AuditTrailViewModel sender, AuditTrail message)
@@ -33,6 +32,5 @@ namespace ZPF.AT
       {
          return;
       }
-
    }
 }

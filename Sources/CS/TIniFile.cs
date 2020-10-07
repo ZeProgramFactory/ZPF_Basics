@@ -504,14 +504,6 @@ namespace ZPF
 
                if ((st.Length > 0) && (st[0] != ';'))   // ? Comment
                {
-                  /*
-                              if ( ( st[0] == '[') 
-                                 && ( st.find( L"]" )> 1 ) )           // ? Section
-                              {
-                                 st = st.substr( 0, st.find( L"]" ) );
-                              };
-                  */
-
                   if ((st[0] == '[')
                      && (st[st.Length - 1] == ']'))           // ? Section
                   {

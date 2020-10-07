@@ -28,118 +28,76 @@ namespace ZPF.AT
 
       public void Clean(AuditTrailViewModel sender)
       {
+         string json = File.ReadAllText(outputFile);
+
          if (_FileType == FileTypes.FullJSON)
          {
-            try
-            {
-               string json = File.ReadAllText(outputFile);
-
-               var Lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
-
-               while (Lines.Count() > sender.MaxLines)
-               {
-                  Lines.RemoveAt(0);
-               };
-
-               json = JsonSerializer.Serialize(Lines);
-
-               File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
-            }
-            catch (Exception ex)
-            {
-               Debug.WriteLine(ex.Message);
-
-               if (Debugger.IsAttached)
-               {
-                  Debugger.Break();
-               };
-            };
+            // nothing to do
          }
          else
          {
-            try
+            json = File.ReadAllText(outputFile);
+            json = json + "}";
+         };
+
+         try
+         {
+            var Lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
+
+            while (Lines.Count() > sender.MaxLines)
             {
-               string json = File.ReadAllText(outputFile);
-               json = json + "}";
+               Lines.RemoveAt(0);
+            };
 
-               var Lines = JsonSerializer.Deserialize<List<AuditTrail>>(json);
+            json = JsonSerializer.Serialize(Lines);
 
-               while (Lines.Count() > sender.MaxLines)
-               {
-                  Lines.RemoveAt(0);
-               };
+            File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
+         }
+         catch (Exception ex)
+         {
+            Debug.WriteLine(ex.Message);
 
-               json = JsonSerializer.Serialize(Lines);
-
-               File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
-            }
-            catch (Exception ex)
+            if (Debugger.IsAttached)
             {
-               Debug.WriteLine(ex.Message);
-
-               if (Debugger.IsAttached)
-               {
-                  Debugger.Break();
-               };
+               Debugger.Break();
             };
          };
       }
 
       public ObservableCollection<AuditTrail> LoadAuditTrail(AuditTrailViewModel sender, bool Filtered = true, long MaxRecords = 500)
       {
+         string json = File.ReadAllText(outputFile);
+
          if (_FileType == FileTypes.FullJSON)
          {
-            try
-            {
-               string json = File.ReadAllText(outputFile);
-
-               var lines = JsonSerializer.Deserialize<ObservableCollection<AuditTrail>>(json);
-
-               //ToDo: filter
-
-               while (lines.Count() > MaxRecords)
-               {
-                  lines.RemoveAt(0);
-               };
-
-               return lines;
-            }
-            catch (Exception ex)
-            {
-               Debug.WriteLine(ex.Message);
-
-               if (Debugger.IsAttached)
-               {
-                  Debugger.Break();
-               };
-            };
+            // nothing to do
          }
          else
          {
-            try
+            json = File.ReadAllText(outputFile);
+            json = json + "}";
+         };
+
+         try
+         {
+            var lines = JsonSerializer.Deserialize<ObservableCollection<AuditTrail>>(json);
+
+            //ToDo: filter
+
+            while (lines.Count() > MaxRecords)
             {
-               string json = File.ReadAllText(outputFile);
-               json = json + "}";
+               lines.RemoveAt(0);
+            };
 
-               var lines = JsonSerializer.Deserialize<ObservableCollection<AuditTrail>>(json);
+            return lines;
+         }
+         catch (Exception ex)
+         {
+            Debug.WriteLine(ex.Message);
 
-               //ToDo: filter
-
-               while (lines.Count() > MaxRecords)
-               {
-                  lines.RemoveAt(0);
-               };
-
-               return lines;
-            }
-            catch (Exception ex)
+            if (Debugger.IsAttached)
             {
-               Debug.WriteLine(ex.Message);
-
-               if (Debugger.IsAttached)
-               {
-                  Debugger.Break();
-               };
+               Debugger.Break();
             };
          };
 

@@ -56,28 +56,6 @@ namespace ZPF.AT
 
       public void WriteLine(AuditTrailViewModel sender, AuditTrail message)
       {
-         //if (message.IsBusiness)
-         //{
-         //   DoIt.OnBackground(() =>
-         //   {
-         //      DoIt.OnMainThread(() =>
-         //      {
-         //         sender.LogsAdd(message);
-         //      });
-         //   });
-         //};
-
-         //if (message.IsBusiness)
-         //{
-         //   DoIt.OnBackground(() =>
-         //   {
-         //      DoIt.OnMainThread(() =>
-         //      {
-         //         sender.LogsAdd(message);
-         //      });
-         //   });
-         //};
-
          try
          {
             string Line = sender.FormatLine(message);
@@ -99,7 +77,6 @@ namespace ZPF.AT
 
       public long Begin(AuditTrailViewModel sender, AuditTrail message)
       {
-         //message.Message = "Experimental Begin" + Environment.NewLine + message.Message;
          WriteLine(sender, message);
          return 1;
       }
@@ -109,7 +86,5 @@ namespace ZPF.AT
          AuditTrail at = new AuditTrail { Level = errorLevel, Message = message, DataOutType = dataOutType, DataOut = dataOut };
          WriteLine(sender, at);
       }
-
-
    }
 }

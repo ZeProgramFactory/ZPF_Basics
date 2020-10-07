@@ -18,9 +18,6 @@ namespace ZPF
    }
    public enum VAlignments { Default, Top, Center, Bottom }
 
-   //Excel public enum HAlignments { Default, Left, Center, Right, CenterContinuous };
-   //Excel public enum VAlignments { Default, Top, Center, Bottom };
-
    public enum LineStyles { None, Hair, Thin, Medium }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - 

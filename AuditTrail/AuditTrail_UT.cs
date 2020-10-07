@@ -118,66 +118,62 @@ namespace ZPF.AT
       /// </summary>;
       /// <typeparam name="T"></typeparam>;
       /// <param name="list">The list.</param>;
-      /// <param name="csvNameWithExt">Name of CSV (w/ path) w/ file ext.</param>;
-      void ListToCSV<T>(List<T> list, string csvCompletePath)
+      /// <param name="csvFileName">Name of CSV (w/ path) w/ file ext.</param>;
+      void ListToCSV<T>(List<T> list, string csvFileName)
       {
-         if (list == null || list.Count == 0) return;
-
-         // get type from 0th member
-         Type t = list[0].GetType();
-         string newLine = Environment.NewLine;
-
-         if (!Directory.Exists(Path.GetDirectoryName(csvCompletePath))) Directory.CreateDirectory(Path.GetDirectoryName(csvCompletePath));
-
-         //if (!File.Exists(csvCompletePath)) File.Create(csvCompletePath);
-
-         using (var sw = new StreamWriter(csvCompletePath))
+         if (list == null || list.Count == 0)
          {
-            // make a new instance of the class name we figured out to get its props
-            object o = Activator.CreateInstance(t);
+            return;
+         };
 
-            // gets all properties
-            PropertyInfo[] props = o.GetType().GetProperties();
-
-            // foreach of the properties in class above, write out properties
-            // this is the header row
-            sw.Write(string.Join(",", props.Select(d => d.Name).ToArray()) + newLine);
-
-            CreateRows(list, sw);
-            //foreach (T item in list)
-            //{
-            //   // this acts as datacolumn
-
-            //   var row = string.Join(",", props.Select(d => item.GetType().GetProperty(d.Name).GetValue(item, null).ToString()).ToArray());
-
-            //   sw.Write(row + newLine);
-            //}
-         }
-      }
-
-      private static void CreateRows<T>(List<T> list, StreamWriter sw)
-      {
-         foreach (var item in list)
+         if (!Directory.Exists(Path.GetDirectoryName(csvFileName)))
          {
+            Directory.CreateDirectory(Path.GetDirectoryName(csvFileName));
+         };
+
+         using (var sw = new StreamWriter(csvFileName))
+         {
+            // - - - gets all properties - - - 
+
             PropertyInfo[] properties = typeof(T).GetProperties();
+
+            // - - - create header - - -
 
             for (int i = 0; i < properties.Length - 1; i++)
             {
                var prop = properties[i];
 
-               if (prop.PropertyType.Name == "String")
+               if (Attribute.GetCustomAttribute(prop, typeof(DB_Attributes.IgnoreAttribute)) == null && Attribute.GetCustomAttribute(prop, typeof(System.Text.Json.Serialization.JsonIgnoreAttribute)) == null)
                {
-                  sw.Write($@"""{prop.GetValue(item)}"",");
-               }
-               else
-               {
-                  sw.Write(prop.GetValue(item) + ",");
+                  sw.Write(prop.Name + ",");
                };
             };
 
-            var lastProp = properties[properties.Length - 1];
+            sw.Write(sw.NewLine);
 
-            sw.Write(lastProp.GetValue(item) + sw.NewLine);
+            // - - - create rows - - -
+
+            foreach (var item in list)
+            {
+               for (int i = 0; i < properties.Length - 1; i++)
+               {
+                  var prop = properties[i];
+
+                  if (Attribute.GetCustomAttribute(prop, typeof(DB_Attributes.IgnoreAttribute)) == null && Attribute.GetCustomAttribute(prop, typeof(System.Text.Json.Serialization.JsonIgnoreAttribute)) == null )
+                  {
+                     if (prop.PropertyType.Name == "String")
+                     {
+                        sw.Write($@"""{prop.GetValue(item)}"",");
+                     }
+                     else
+                     {
+                        sw.Write(prop.GetValue(item) + ",");
+                     };
+                  };
+               };
+
+               sw.Write(sw.NewLine);
+            }
          }
       }
 
