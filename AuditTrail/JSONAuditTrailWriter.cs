@@ -28,7 +28,12 @@ namespace ZPF.AT
 
       public void Clean(AuditTrailViewModel sender)
       {
-         string json = File.ReadAllText(outputFile);
+         string json = "";
+
+         if (System.IO.File.Exists(outputFile))
+         {
+            json = File.ReadAllText(outputFile);
+         };
 
          if (_FileType == FileTypes.FullJSON)
          {
@@ -66,7 +71,13 @@ namespace ZPF.AT
 
       public ObservableCollection<AuditTrail> LoadAuditTrail(AuditTrailViewModel sender, bool Filtered = true, long MaxRecords = 500)
       {
-         string json = File.ReadAllText(outputFile);
+         string json = "";
+
+         if (System.IO.File.Exists(outputFile))
+         {
+            json = File.ReadAllText(outputFile);
+         };
+
 
          if (_FileType == FileTypes.FullJSON)
          {
@@ -110,7 +121,12 @@ namespace ZPF.AT
          {
             try
             {
-               string json = File.ReadAllText(outputFile);
+               string json = "";
+
+               if (System.IO.File.Exists(outputFile))
+               {
+                  json = File.ReadAllText(outputFile);
+               };
 
                List<AuditTrail> lines = null;
 
@@ -125,10 +141,7 @@ namespace ZPF.AT
 
                lines.Add(message);
 
-               json = JsonSerializer.Serialize(lines, new JsonSerializerOptions
-               {
-                  IgnoreNullValues = true,
-               });
+               json = JsonSerializer.Serialize(lines, new JsonSerializerOptions { IgnoreNullValues = true });
 
                File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
             }

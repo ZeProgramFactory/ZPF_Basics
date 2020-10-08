@@ -58,7 +58,28 @@ namespace ZPF.AT
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
       [TestMethod]
-      public void AuditTrail_JSON()
+      public void AuditTrail_JSON01()
+      {
+         var path = System.IO.Path.GetTempFileName();
+
+         AuditTrailViewModel.Current.Init(new JSONAuditTrailWriter(path));
+         Log.WriteHeader("Cassini", "V1.23", $"");
+
+         AuditTrailViewModel.Current.Logs.Clear();
+
+         var DT = DateTime.Now;
+
+
+         var ts = DateTime.Now - DT;
+         Log.Write(ErrorLevel.Info, ts.TotalSeconds.ToString());
+
+         Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      [TestMethod]
+      public void AuditTrail_JSON02()
       {
          var path = System.IO.Path.GetTempFileName();
 
@@ -80,7 +101,7 @@ namespace ZPF.AT
 
          Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
       }
-
+      
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
       [TestMethod]
