@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using ZPF;
 using ZPF.SQL;
@@ -215,6 +218,8 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       // - - -  - - - 
 
+      #region Creators 
+
       public AuditTrail()
       {
          TimeStamp = DateTime.Now;
@@ -287,6 +292,8 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
             };
          };
       }
+
+      #endregion
 
       // - - -  - - - 
 
@@ -394,9 +401,53 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       // - - -  - - -
 
+      public static AuditTrail FromHere(ErrorLevel errorLevel, string tag, string message)
+      {
+         TStrings st = new TStrings();
+         st.Text = Environment.StackTrace;
+
+         var data = st[2];
+         if (string.IsNullOrEmpty(data))
+         {
+            data = Environment.StackTrace;
+         };
+
+         return new AuditTrail
+         {
+            Level = errorLevel,
+            Tag = tag,
+            Message = message,
+            DataInType = "TXT",
+            DataIn = data,
+         };
+      }
+
+      public static AuditTrail WithStack(ErrorLevel errorLevel, string tag, string message)
+      {
+         TStrings st = new TStrings();
+         st.Text = Environment.StackTrace;
+
+         if (st.Count > 3)
+         {
+            st.Delete(0);
+            st.Delete(0);
+         };
+
+         return new AuditTrail
+         {
+            Level = errorLevel,
+            Tag = tag,
+            Message = message,
+            DataInType = "TXT",
+            DataIn = st.Text,
+         };
+      }
+
+      // - - -  - - -
+
       public override string ToString()
       {
-         return $"{TimeStamp.ToString("HH:mm:ss")} { (new String('*', (int)Level) + "----" ).Left(4) } {Tag.Left(10)} {Message}";
+         return $"{TimeStamp.ToString("HH:mm:ss")} { (new String('*', (int)Level) + "----").Left(4) } {Tag.Left(10)} {Message}";
       }
    }
 }

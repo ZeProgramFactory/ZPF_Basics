@@ -383,6 +383,10 @@ namespace ZPF.AT
 
    public static class Log
    {
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      #region Debug - IsBusiness = false
+
       public static void Debug(ErrorLevel error, string Message)
       {
          AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = false, Level = error, Message = Message });
@@ -427,6 +431,12 @@ namespace ZPF.AT
          AuditTrailViewModel.Current.Write(auditTrail);
       }
 
+      #endregion
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      #region Write - IsBusiness = true
+
       public static void Write(AuditTrail auditTrail)
       {
          auditTrail.IsBusiness = true;
@@ -436,6 +446,11 @@ namespace ZPF.AT
       public static void Write(string Tag, string Message)
       {
          AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = true, Tag = Tag, Message = Message });
+      }
+
+      public static void Write(ErrorLevel error, string Tag, string Message)
+      {
+         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = true, Level = error, Tag = Tag, Message = Message });
       }
 
       public static void Write(ErrorLevel error, string Message)
@@ -456,6 +471,7 @@ namespace ZPF.AT
 
          AuditTrailViewModel.Current.Write(at);
       }
+      #endregion
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
@@ -469,7 +485,6 @@ namespace ZPF.AT
       {
          AuditTrailViewModel.Current.End(Parent, errorLevel, Message, DataOutType, DataOut);
       }
-
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 

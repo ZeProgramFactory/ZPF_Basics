@@ -101,7 +101,7 @@ namespace ZPF.AT
 
          Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
       }
-      
+
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
       [TestMethod]
@@ -180,7 +180,7 @@ namespace ZPF.AT
                {
                   var prop = properties[i];
 
-                  if (Attribute.GetCustomAttribute(prop, typeof(DB_Attributes.IgnoreAttribute)) == null && Attribute.GetCustomAttribute(prop, typeof(System.Text.Json.Serialization.JsonIgnoreAttribute)) == null )
+                  if (Attribute.GetCustomAttribute(prop, typeof(DB_Attributes.IgnoreAttribute)) == null && Attribute.GetCustomAttribute(prop, typeof(System.Text.Json.Serialization.JsonIgnoreAttribute)) == null)
                   {
                      if (prop.PropertyType.Name == "String")
                      {
@@ -196,6 +196,26 @@ namespace ZPF.AT
                sw.Write(sw.NewLine);
             }
          }
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      [TestMethod]
+      public void AuditTrail_FromHere()
+      {
+         var at = AuditTrail.FromHere(ErrorLevel.Log, "tag", "message");
+
+         Assert.AreEqual(true, at.DataIn.Contains("AuditTrail_FromHere"));
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      [TestMethod]
+      public void AuditTrail_WithStack()
+      {
+         var at = AuditTrail.WithStack(ErrorLevel.Log, "tag", "message");
+
+         Assert.AreEqual(true, at.DataIn.Contains("AuditTrail_WithStack"));
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -

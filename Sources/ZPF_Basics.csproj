@@ -1,5 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Michael Engelmann</Authors>
@@ -10,15 +10,14 @@
     <PackageIconUrl>https://raw.githubusercontent.com/ZeProgFactory/MediaPlayer/master/docs/ZeProgramFactory.Square.BG.png</PackageIconUrl>
     <PackageTags>Basics</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0.7</Version>
+    <Version>2.0.0.9</Version>
     <Description>Basics based on .Net Standard 2.0</Description>
-    <AssemblyVersion>2.0.0.7</AssemblyVersion>
-    <FileVersion>2.0.0.7</FileVersion>
+    <AssemblyVersion>2.0.0.8</AssemblyVersion>
+    <FileVersion>2.0.0.8</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ZeProgramFactory/ZPF_Basics</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0;DBI</DefineConstants>
   </PropertyGroup>
@@ -40,7 +39,6 @@
     <Compile Include="..\AuditTrail\IAuditTrailWriter.cs" Link="AuditTrail\IAuditTrailWriter.cs" />
     <Compile Include="..\AuditTrail\JSONAuditTrailWriter.cs" Link="AuditTrail\JSONAuditTrailWriter.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="DBSQL\" />
     <Folder Include="AuditTrail\" />
@@ -48,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0-rc.1.20451.14" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0-rc.2.20475.5" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="NETStandard.Library" Version="2.0.1" />
