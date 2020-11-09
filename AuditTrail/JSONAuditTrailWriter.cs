@@ -62,10 +62,12 @@ namespace ZPF.AT
          {
             Debug.WriteLine(ex.Message);
 
+#if DEBUG
             if (Debugger.IsAttached)
             {
                Debugger.Break();
             };
+#endif
          };
       }
 
@@ -106,10 +108,12 @@ namespace ZPF.AT
          {
             Debug.WriteLine(ex.Message);
 
+#if DEBUG
             if (Debugger.IsAttached)
             {
                Debugger.Break();
             };
+#endif
          };
 
          return sender.Logs;
@@ -149,10 +153,12 @@ namespace ZPF.AT
             {
                Debug.WriteLine(ex.Message);
 
+#if DEBUG
                if (Debugger.IsAttached)
                {
                   Debugger.Break();
                };
+#endif
             };
          }
          else
