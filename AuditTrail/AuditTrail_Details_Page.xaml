@@ -1,5 +1,5 @@
 ﻿<Page 
-   xmlns:ZPF="clr-namespace:ZPF.WPF;assembly=ZPF_Basics_WPF"  
+   xmlns:ZPF="clr-namespace:ZPF.WPF.Compos;assembly=ZPF.WPF.Compos"
    x:Class="ZPF.AuditTrail_Details_Page"
    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
