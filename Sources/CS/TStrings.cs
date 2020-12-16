@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
-
-
+using System.Text;
 
 namespace ZPF
 {
@@ -157,7 +156,7 @@ namespace ZPF
 
       /******************************************************************************/
 
-      string Get(int Index)
+      public string Get(int Index)
       {
          Check(Index);
          return (InnerList.GetValue(Index) as TStringsItem).ToString();
@@ -508,13 +507,19 @@ namespace ZPF
          SaveToFile(FileName, System.Text.Encoding.Unicode);
       }
 
-      public void SaveToFile(string FileName, System.Text.Encoding Encoding)
-      {
-         if (FileName == "") return;
 
-         using (var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.Write))
+      /// <summary>
+      /// Saves the strings in the list to the specified file.
+      /// </summary>
+      /// <param name="fileName"></param>
+      /// <param name="encoding"></param>
+      public void SaveToFile(string fileName, System.Text.Encoding encoding)
+      {
+         if (fileName == "") return;
+
+         using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Write))
          {
-            using (StreamWriter asw = new StreamWriter(stream, Encoding))
+            using (StreamWriter asw = new StreamWriter(stream, encoding))
             {
                for (int i = 0; i < this.Count; i++)
                {
@@ -522,6 +527,13 @@ namespace ZPF
                }
             };
          };
+
+         //StringBuilder text = new StringBuilder();
+         //for (int i = 0; i < this.Count; i++)
+         //{
+         //   text.Append(Get(i));
+         //}
+         //System.IO.File.WriteAllText(fileName, text.ToString(), encoding);
       }
 
 
@@ -557,10 +569,17 @@ namespace ZPF
 
       public Object PopObject()
       {
-         Object Result = GetObject(this.Count - 1);
-         Delete(this.Count - 1);
+         if (this.Count > 0)
+         {
+            Object Result = GetObject(this.Count - 1);
+            Delete(this.Count - 1);
 
-         return Result;
+            return Result;
+         }
+         else
+         {
+            return null;
+         };
       }
 
       /******************************************************************************/

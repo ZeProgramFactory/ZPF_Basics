@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ZPF;
 
@@ -48,7 +50,7 @@ namespace ZPF
 
          TStrings json = TStrings.FromJSon(JSON);
 
-         Assert.IsTrue( json.Count == 4 && json["3"]=="Error");
+         Assert.IsTrue(json.Count == 4 && json["3"] == "Error");
       }
 
       [TestMethod]
@@ -121,7 +123,7 @@ namespace ZPF
          file["C"] = "3";
          file["B"] = "4";
 
-         Assert.AreEqual(3, file.Count );
+         Assert.AreEqual(3, file.Count);
       }
 
       [TestMethod]
@@ -134,6 +136,137 @@ namespace ZPF
          file["B"] = "4";
 
          Assert.AreEqual("4", file["B"]);
+      }
+
+      string dummy = "azertyuiop" + "0123456789";
+
+      [TestMethod]
+      public void _01_SaveToFile_Perftest_00()
+      {
+         FileName = System.IO.Path.GetTempFileName() + ".txt";
+
+         TStrings file = new TStrings();
+         for (int i = 0; i < 100000; i++)
+         {
+            file.Add(dummy);
+         };
+
+         var dt = DateTime.Now;
+         file.SaveToFile(FileName);
+         var dt1 = DateTime.Now - dt;
+
+         System.IO.File.Delete(FileName);
+
+         dt = DateTime.Now;
+
+         using (var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.Write))
+         {
+            using (StreamWriter asw = new StreamWriter(stream, Encoding.Default))
+            {
+               for (int i = 0; i < file.Count; i++)
+               {
+                  asw.WriteLine(file.Get(i));
+               }
+            };
+         };
+
+         var dt2 = DateTime.Now - dt;
+
+         Console.WriteLine($"{dt1.TotalMilliseconds} < {dt2.TotalMilliseconds}");
+         Assert.AreEqual(true, dt1 < dt2);
+      }
+
+      [TestMethod]
+      public void _01_SaveToFile_Perftest_01()
+      {
+         FileName = System.IO.Path.GetTempFileName() + ".txt";
+
+         TStrings file = new TStrings();
+         for (int i = 0; i < 100000; i++)
+         {
+            file.Add(dummy);
+         };
+
+         var dt = DateTime.Now;
+         file.SaveToFile(FileName);
+         var dt1 = DateTime.Now - dt;
+
+         System.IO.File.Delete(FileName);
+
+         dt = DateTime.Now;
+
+         for (int i = 0; i < file.Count; i++)
+         {
+            System.IO.File.AppendAllText(FileName, file.Get(i));
+         }
+         var dt2 = DateTime.Now - dt;
+
+         Console.WriteLine($"{dt1.TotalMilliseconds} < {dt2.TotalMilliseconds}");
+         Assert.AreEqual(true, dt1 < dt2);
+      }
+
+      [TestMethod]
+      public void _01_SaveToFile_Perftest_02()
+      {
+         FileName = System.IO.Path.GetTempFileName() + ".txt";
+
+         TStrings file = new TStrings();
+         for (int i = 0; i < 100000; i++)
+         {
+            file.Add(dummy);
+         };
+
+         var dt = DateTime.Now;
+         file.SaveToFile(FileName);
+         var dt1 = DateTime.Now - dt;
+
+         System.IO.File.Delete(FileName);
+
+         dt = DateTime.Now;
+
+         StringBuilder text = new StringBuilder();
+         for (int i = 0; i < file.Count; i++)
+         {
+            text.Append(file.Get(i));
+         }
+         System.IO.File.WriteAllText(FileName, text.ToString() );
+
+         var dt2 = DateTime.Now - dt;
+
+         Console.WriteLine($"{dt1.TotalMilliseconds} < {dt2.TotalMilliseconds}");
+         Assert.AreEqual(true, dt1 < dt2);
+      }
+
+      [TestMethod]
+      public void _01_SaveToFile_Perftest_03()
+      {
+         FileName = System.IO.Path.GetTempFileName() + ".txt";
+
+         TStrings file = new TStrings();
+         for (int i = 0; i < 100000; i++)
+         {
+            file.Add(dummy);
+         };
+
+         var dt = DateTime.Now;
+         file.SaveToFile(FileName);
+         var dt1 = DateTime.Now - dt;
+
+         System.IO.File.Delete(FileName);
+
+         dt = DateTime.Now;
+
+         string text = "";
+         for (int i = 0; i < file.Count; i++)
+         {
+            text = text +  file.Get(i);
+         }
+         System.IO.File.WriteAllText(FileName, text );
+
+         var dt2 = DateTime.Now - dt;
+
+         Console.WriteLine($"{dt1.TotalMilliseconds} < {dt2.TotalMilliseconds}");
+         Assert.AreEqual(true, dt1 < dt2);
       }
    }
 }
