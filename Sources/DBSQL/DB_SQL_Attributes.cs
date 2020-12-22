@@ -49,6 +49,15 @@ namespace ZPF.SQL
          }
       }
 
+      [AttributeUsage(AttributeTargets.Property)]
+      public class IgnoreImportAttribute : Attribute
+      {
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class IgnoreExportAttribute : Attribute
+      {
+      }
       // - - -  - - - 
 
       [AttributeUsage(AttributeTargets.Property)]
