@@ -390,6 +390,34 @@ namespace ZPF
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      /// <summary>
+      /// Determine if at the end of a string the quotes are closed or not
+      /// </summary>
+      /// <param name="source"></param>
+      /// <returns></returns>
+      public static bool InDoubleQuotes(this string source )
+      {
+         if (string.IsNullOrEmpty(source))
+         {
+            return false;
+         };
+
+         char ch = '"';
+
+         if (source.Count(f => (f == ch)) % 2 == 1)
+         {
+            // in text
+            return true;
+         }
+         else
+         {
+            // ok
+            return false;
+         };
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
    }
 }
 

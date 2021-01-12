@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Include="..\AuditTrail\AuditTrail_UT.cs" Link="AuditTrail_UT.cs" />
+    <Compile Include="..\Sources\CS\StringExtensions_UT.cs" Link="StringExtensions_UT.cs" />
     <Compile Include="..\Sources\CS\TIniFile_UT.cs" Link="TIniFile_UT.cs" />
     <Compile Include="..\Sources\CS\TStrings_UT.cs" Link="TStrings_UT.cs" />
   </ItemGroup>

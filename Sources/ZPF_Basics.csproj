@@ -27,6 +27,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="CS\DoIt_UT.cs" />
+    <Compile Remove="CS\StringExtensions_UT.cs" />
     <Compile Remove="CS\TIniFile_UT.cs" />
     <Compile Remove="CS\TStrings_UT.cs" />
   </ItemGroup>
