@@ -88,7 +88,7 @@ namespace ZPF
          var list = new TStrings();
          list.Text = source;
 
-         for( int i=0; i < Nb && i < list.Count; i++)
+         for (int i = 0; i < Nb && i < list.Count; i++)
          {
             Result = Result + list[i] + Environment.NewLine;
          };
@@ -132,7 +132,7 @@ namespace ZPF
 
          for (int i = 0; i < chars.Length; i++)
          {
-            source = source.Replace( chars[i]+"", "");
+            source = source.Replace(chars[i] + "", "");
          };
 
          return source;
@@ -155,7 +155,7 @@ namespace ZPF
       {
          int place = source.IndexOf(find);
 
-         if (place<0)
+         if (place < 0)
          {
             return source;
          }
@@ -211,7 +211,7 @@ namespace ZPF
             return -1;
          };
 
-         if (List.Count==0)
+         if (List.Count == 0)
          {
             return -1;
          };
@@ -219,7 +219,7 @@ namespace ZPF
          for (int i = 0; i < List.Count; i++)
          {
             string chars = List[i];
-          
+
             if (source.LastIndexOf(chars) > 0)
             {
                return source.LastIndexOf(chars);
@@ -231,7 +231,7 @@ namespace ZPF
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
-      public static string Clean(this string source )
+      public static string Clean(this string source)
       {
          if (string.IsNullOrEmpty(source)) return source;
 
@@ -396,7 +396,7 @@ namespace ZPF
       /// </summary>
       /// <param name="source"></param>
       /// <returns></returns>
-      public static bool InDoubleQuotes(this string source )
+      public static bool InDoubleQuotes(this string source)
       {
          if (string.IsNullOrEmpty(source))
          {
@@ -418,6 +418,55 @@ namespace ZPF
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      /// <summary>
+      /// Splits the sting at each Environment.NewLine that is not contained between two double quotes
+      /// </summary>
+      /// <param name="source"></param>
+      /// <returns></returns>
+      public static List<string> GetLines(this string source)
+      {
+         var lines = source.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+         #region SubFunctions
+         void CleanEmptyLines()
+         {
+            for (int i = lines.Count - 1; i >= 0; i--)
+            {
+               if (string.IsNullOrEmpty(lines[i]))
+               {
+                  lines.RemoveAt(i);
+               };
+            };
+         };
+         #endregion
+
+         // - - - clean empty lines - - -
+
+         CleanEmptyLines();
+
+         // - - - join separated lines - - -
+
+         for (int i = 0; i < lines.Count - 1; i++)
+         {
+            if (lines[i].InDoubleQuotes())
+            {
+               lines[i + 1] = lines[i] + Environment.NewLine + lines[i + 1];
+               lines[i] = "";
+            };
+         }
+
+         // - - - clean empty lines - - -
+
+         CleanEmptyLines();
+
+         // - - -  - - -
+
+         return lines;
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
    }
 }
 

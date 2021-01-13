@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ZPF
@@ -44,5 +45,19 @@ namespace ZPF
          Assert.AreEqual(false, result);
       }
 
+      [TestMethod]
+      public void _02_GetLines_01()
+      {
+         var st = @"
+""T1"",""T2"",""Value""
+   ""123"", ""bla bla 
+bla bla"", 123 
+""signature \r\n Tom Jones"", ""ABC"", 456
+
+";
+         var lines = st.GetLines();
+
+         Assert.AreEqual(3, lines.Count);
+      }
    }
 }
