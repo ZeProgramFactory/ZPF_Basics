@@ -59,5 +59,25 @@ bla bla"", 123
 
          Assert.AreEqual(3, lines.Count);
       }
+
+      [TestMethod]
+      public void _02_GetLines_02()
+      {
+         var text = System.IO.File.ReadAllLines(@"D:\GitWare\Nugets\ZPF_MCE\BP2\Doc\Voies Paris.csv");
+
+         var lines = text.GetLines();
+
+         Assert.AreEqual(true, lines.Count == 6652);
+      }
+
+      [TestMethod]
+      public void _02_GetLines_03()
+      {
+         var text = System.IO.File.ReadAllLines(@"D:\GitWare\Nugets\ZPF_Basics\Data\AuditTrail.csv");
+
+         var lines = text.GetLines();
+
+         Assert.AreEqual(true, lines.Count == 2001);
+      }
    }
 }

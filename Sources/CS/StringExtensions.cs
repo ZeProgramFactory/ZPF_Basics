@@ -424,9 +424,16 @@ namespace ZPF
       /// </summary>
       /// <param name="source"></param>
       /// <returns></returns>
-      public static List<string> GetLines(this string source)
+      public static List<string> GetLines(this string source )
       {
-         var lines = source.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+         var lines = source.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+         return lines.GetLines();
+      }
+
+      public static List<string> GetLines(this string[] source)
+      {
+         var lines = source.ToList();
 
          #region SubFunctions
          void CleanEmptyLines()
