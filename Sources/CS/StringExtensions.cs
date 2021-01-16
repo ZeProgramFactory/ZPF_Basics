@@ -420,18 +420,25 @@ namespace ZPF
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
       /// <summary>
-      /// Splits the sting at each Environment.NewLine that is not contained between two double quotes
+      /// Splits the sting at each 'breakingChars' that is not contained between two double quotes
       /// </summary>
       /// <param name="source"></param>
+      /// <param name="breakingChars"></param>
       /// <returns></returns>
-      public static List<string> GetLines(this string source )
+      public static List<string> GetLines(this string source, string breakingChars = "\r\n")
       {
-         var lines = source.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+         var lines = source.Split(new string[] { breakingChars }, StringSplitOptions.RemoveEmptyEntries);
 
-         return lines.GetLines();
+         return lines.GetLines(breakingChars);
       }
 
-      public static List<string> GetLines(this string[] source)
+      /// <summary>
+      /// Splits the sting at each 'breakingChars' that is not contained between two double quotes
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="breakingChars"></param>
+      /// <returns></returns>
+      public static List<string> GetLines(this string[] source, string breakingChars = "\r\n")
       {
          var lines = source.ToList();
 
@@ -458,7 +465,7 @@ namespace ZPF
          {
             if (lines[i].InDoubleQuotes())
             {
-               lines[i + 1] = lines[i] + Environment.NewLine + lines[i + 1];
+               lines[i + 1] = lines[i] + breakingChars + lines[i + 1];
                lines[i] = "";
             };
          }

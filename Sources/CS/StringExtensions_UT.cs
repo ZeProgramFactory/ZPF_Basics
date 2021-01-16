@@ -79,5 +79,16 @@ bla bla"", 123
 
          Assert.AreEqual(true, lines.Count == 2001);
       }
+
+
+      [TestMethod]
+      public void _02_GetLines_04()
+      {
+         var text = System.IO.File.ReadAllText(@"D:\GitWare\Nugets\ZPF_Basics\Data\AuditTrail.csv").Replace( Environment.NewLine, "\n");
+
+         var lines = text.GetLines("\n");
+
+         Assert.AreEqual(true, lines.Count == 2001);
+      }
    }
 }
