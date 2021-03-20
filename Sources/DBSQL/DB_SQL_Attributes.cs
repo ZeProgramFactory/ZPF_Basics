@@ -49,6 +49,22 @@ namespace ZPF.SQL
          }
       }
 
+      [AttributeUsage(AttributeTargets.Class)]
+      public class ImportFieldIndexAttribute : Attribute
+      {
+         public ImportFieldIndexAttribute(int Index)
+         {
+         }
+      }
+
+      [AttributeUsage(AttributeTargets.Class)]
+      public class ImportFieldNameAttribute : Attribute
+      {
+         public ImportFieldNameAttribute(string ColName)
+         {
+         }
+      }
+
       [AttributeUsage(AttributeTargets.Property)]
       public class IgnoreImportAttribute : Attribute
       {
@@ -94,7 +110,7 @@ namespace ZPF.SQL
             Show = show;
          }
 
-         public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false, bool isBold = false )
+         public ShowAttribute(bool show, int width = -1, Alignments alignment = Alignments.left, string header = null, string formatStr = null, bool hideIfNull = false, bool isBold = false)
          {
             Show = show;
             Width = width;
