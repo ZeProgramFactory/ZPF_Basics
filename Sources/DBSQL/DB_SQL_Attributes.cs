@@ -49,7 +49,14 @@ namespace ZPF.SQL
          }
       }
 
-      [AttributeUsage(AttributeTargets.Class)]
+      // - - -  - - - 
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class IgnoreImportAttribute : Attribute
+      {
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
       public class ImportFieldIndexAttribute : Attribute
       {
          public ImportFieldIndexAttribute(int Index)
@@ -57,7 +64,7 @@ namespace ZPF.SQL
          }
       }
 
-      [AttributeUsage(AttributeTargets.Class)]
+      [AttributeUsage(AttributeTargets.Property)]
       public class ImportFieldNameAttribute : Attribute
       {
          public ImportFieldNameAttribute(string ColName)
@@ -66,14 +73,10 @@ namespace ZPF.SQL
       }
 
       [AttributeUsage(AttributeTargets.Property)]
-      public class IgnoreImportAttribute : Attribute
-      {
-      }
-
-      [AttributeUsage(AttributeTargets.Property)]
       public class IgnoreExportAttribute : Attribute
       {
       }
+
       // - - -  - - - 
 
       [AttributeUsage(AttributeTargets.Property)]
