@@ -6,16 +6,52 @@ namespace ZPF.SQL
    /// 11/05/17 - ME  - Add: IgnoreIntTypeAttribute
    /// 17/05/17 - ME  - Add: IgnoreBoolTypeAttribute
    /// 02/06/20 - ME  - Add: presentation attributes
+   /// 28/03/21 - ME  - Add: Table creation attributes
    /// 
-   /// 2005..2020 ZePocketForge.com, SAS ZPF
+   /// 2005..2021 ZePocketForge.com, SAS ZPF, @ZeProgFractory
    /// </summary>
    public enum Alignments { left, center, right }
+   public enum SortDirections { asc, desc }
+
 
    public class DB_Attributes
    {
       [AttributeUsage(AttributeTargets.Property)]
       public class PrimaryKeyAttribute : Attribute
       {
+         public PrimaryKeyAttribute()
+         {
+            SortDirection = SortDirections.asc;
+         }
+
+         public PrimaryKeyAttribute( bool autoInc = false, SortDirections sortDirection = SortDirections.asc)
+         {
+            AutoInc = autoInc;
+            SortDirection = sortDirection;
+         }
+
+         public bool AutoInc { get; }
+         public SortDirections SortDirection { get; }
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
+      public class IndexAttribute : Attribute
+      {
+         public IndexAttribute()
+         {
+            SortDirection = SortDirections.asc;
+         }
+
+         public IndexAttribute(bool isUnique = false, SortDirections sortDirection = SortDirections.asc, string indexedColumns="" )
+         {
+            IsUnique = isUnique;
+            SortDirection = sortDirection;
+            IndexedColumns = indexedColumns;
+         }
+
+         public bool IsUnique { get; }
+         public SortDirections SortDirection { get; }
+         public string IndexedColumns { get; }
       }
 
       [AttributeUsage(AttributeTargets.Property)]
@@ -36,17 +72,34 @@ namespace ZPF.SQL
       [AttributeUsage(AttributeTargets.Class)]
       public class TableNameAttribute : Attribute
       {
-         public TableNameAttribute(string TableName)
+         public TableNameAttribute(string tableName)
          {
+            TableName = tableName;
          }
+
+         public string TableName { get; }
       }
 
       [AttributeUsage(AttributeTargets.Class)]
+      public class TableCommentAttribute : Attribute
+      {
+         public TableCommentAttribute(string comment)
+         {
+            Comment = comment;
+         }
+
+         public string Comment { get; }
+      }
+
+      [AttributeUsage(AttributeTargets.Property)]
       public class CommentAttribute : Attribute
       {
-         public CommentAttribute(string Comment)
+         public CommentAttribute(string comment)
          {
+            Comment = comment;
          }
+
+         public string Comment { get; }
       }
 
       // - - -  - - - 
@@ -59,17 +112,23 @@ namespace ZPF.SQL
       [AttributeUsage(AttributeTargets.Property)]
       public class ImportFieldIndexAttribute : Attribute
       {
-         public ImportFieldIndexAttribute(int Index)
+         public ImportFieldIndexAttribute(int index)
          {
+            Index = index;
          }
+
+         public int Index { get; }
       }
 
       [AttributeUsage(AttributeTargets.Property)]
       public class ImportFieldNameAttribute : Attribute
       {
-         public ImportFieldNameAttribute(string ColName)
+         public ImportFieldNameAttribute(string colName)
          {
+            ColName = colName;
          }
+
+         public string ColName { get; }
       }
 
       [AttributeUsage(AttributeTargets.Property)]
@@ -82,9 +141,39 @@ namespace ZPF.SQL
       [AttributeUsage(AttributeTargets.Property)]
       public class MaxLengthAttribute : Attribute
       {
-         public MaxLengthAttribute(int Length)
+         public MaxLengthAttribute(int length)
          {
+            Length = length;
          }
+         public int Length { get; }
+      }
+
+      /// <summary>
+      /// For example, the constant 12.345 is converted into a numeric value with a precision of 5 and a scale of 3. 
+      /// </summary>
+      [AttributeUsage(AttributeTargets.Property)]
+      public class PrecisionScaleAttribute : Attribute
+      {
+         public PrecisionScaleAttribute()
+         {
+            Precision = 10;
+            Scale = 2;
+         }
+
+         public PrecisionScaleAttribute(int precision)
+         {
+            Precision = precision;
+            Scale = 2;
+         }
+
+         public PrecisionScaleAttribute(int precision, int scale)
+         {
+            Precision = precision;
+            Scale = scale;
+         }
+
+         public int Precision { get; }
+         public int Scale { get; }
       }
 
       [AttributeUsage(AttributeTargets.Property)]
