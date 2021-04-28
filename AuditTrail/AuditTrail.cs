@@ -15,204 +15,46 @@ namespace ZPF.AT
    {
       #region SQLCreate
 
-      public static readonly string SQLCreate_SQLite =
-@"
-CREATE TABLE IF NOT EXISTS AuditTrail(
-   PK                INTEGER PRIMARY KEY AUTOINCREMENT, 
-   TimeStamp         DATETIME,
-   TimeStampApp      DATETIME,
-   TimeStampDB       DATETIME,
-   Parent            INTEGER, 
-   IsBusiness        BOOLEAN default 0,
-   Level             int,
-
-   Application       varchar(32),
-   Tag               VARCHAR(128) not null,
-   Message           VARCHAR(1024) not null,
-
-   Ticks             INTEGER, 
-   [DataInType]      VARCHAR (16)  NULL,
-   [DataIn]          TEXT           NULL,
-   [DataOutType]     VARCHAR (16)  NULL,
-   [DataOut]         TEXT           NULL,
-
-   [TerminalID]      VARCHAR (128)  NULL,
-   [TerminalIP]      VARCHAR (128)  NULL,
-   [FKUser]          VARCHAR (128)  NULL,
-
-   [ItemID]          VARCHAR (128)  NULL,
-   [ItemType]        VARCHAR (64)   NULL,
-   [FKExtern]        INTEGER
-);
-
-CREATE INDEX AuditTrail_01 ON AuditTrail (Tag);
-CREATE INDEX AuditTrail_02 ON AuditTrail (TimeStamp);
-CREATE INDEX AuditTrail_03 ON AuditTrail (Level);
-CREATE INDEX AuditTrail_04 ON AuditTrail (Application);
-
-CREATE VIEW [V_AuditTrail_Last100]
+      public static readonly string PostScript_SQLite = @"
+CREATE VIEW [AuditTrail_V_Last100]
 AS
-SELECT TOP (100) PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
+SELECT PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
 FROM   AuditTrail
-ORDER BY PK DESC;
+ORDER BY PK DESC
+limit 100;
 ";
 
-      // DB_SQL.CreateTable( AuditTrail );
-      // DB_SQL.CreateTable( AuditTrail, AuditTrail.SQLCreate_MSSQL );
-
-      public static readonly string SQLCreate_MSSQL = 
-@"
-CREATE TABLE [dbo].[AuditTrail] (
-   [PK]             BIGINT         IDENTITY (1000, 1) NOT NULL,
-   [TimeStamp]      DATETIME       DEFAULT (getdate()) NOT NULL,
-   [TimeStampApp]   DATETIME       ,
-   [TimeStampDB]    DATETIME       DEFAULT (getdate()),
-   [Parent]         BIGINT         NULL,
-   [IsBusiness]     BIT            DEFAULT ((0)) NULL,
-   [Level]          INT            NOT NULL,
-
-   [Application] VARCHAR (32)   NULL,
-   [Tag]         VARCHAR (128)  NOT NULL,
-   [Message]     VARCHAR (1024) NOT NULL,
-
-   [Ticks]           BIGINT         NULL,
-   [DataInType]      VARCHAR (16)  NULL,
-   [DataIn]          TEXT           NULL,
-   [DataOutType]     VARCHAR (16)  NULL,
-   [DataOut]         TEXT           NULL,
-
-   [TerminalID]  VARCHAR (128)  NULL,
-   [TerminalIP]  VARCHAR (128)  NULL,
-   [FKUser]      VARCHAR (128)  NULL,
-
-   [ItemID]          VARCHAR (128)  NULL,
-   [ItemType]        VARCHAR (64)   NULL,
-   [FKExtern]        BIGINT,
-
-    CONSTRAINT [PK_AuditTrail] PRIMARY KEY CLUSTERED ([PK] ASC)
-);
-
-CREATE INDEX [IX_AuditTrail_Tag]   ON [AuditTrail]([Tag] ASC);
-CREATE INDEX [IX_AuditTrail_TS]    ON [AuditTrail]([TimeStamp] ASC);
-CREATE INDEX [IX_AuditTrail_LEVEL] ON [AuditTrail]([Level] ASC);
-CREATE INDEX [IX_AuditTrail_APP]   ON [AuditTrail]([Application] ASC);
-  
-EXECUTE('CREATE VIEW [V_AuditTrail_Last100]
+      public static readonly string PostScript_MSSQL = @"
+EXECUTE('CREATE VIEW [AuditTrail_V_Last100]
 AS
 SELECT TOP (100) PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
 FROM   AuditTrail
 ORDER BY PK DESC;');
 ";
 
-      public static readonly string SQLCreate_MySQL =
-@"
-NOT UP TO DATE
-
-CREATE TABLE `AuditTrail` (
-	`PK` INT(11) NOT NULL AUTO_INCREMENT,
-	`TimeStamp` DATETIME NOT NULL,
-	`TimeStampApp` DATETIME,
-	`TimeStampDB` DATETIME,
-	`Level` INT(11) NOT NULL,
-	`Tag` VARCHAR(128) NOT NULL,
-	`Message` VARCHAR(1024) NOT NULL,
-	`Data` TEXT NULL,
-	`TerminalID` VARCHAR(128) NULL DEFAULT NULL,
-	`FKUser` VARCHAR(128) NULL DEFAULT NULL,
-	`ItemID` VARCHAR(128) NULL DEFAULT NULL,
-	`ItemType` VARCHAR(128) NULL DEFAULT NULL,
-	PRIMARY KEY (`PK`),
-	INDEX `Tag` (`Tag`),
-	INDEX `TimeStamp` (`TimeStamp`)
-)
-COLLATE='latin1_swedish_ci'
-ENGINE=InnoDB;
+      public static readonly string PostScript_MySQL = @"
+CREATE VIEW `AuditTrail_V_Last100` AS 
+select 
+   `AuditTrail`.`PK` AS `PK`,`AuditTrail`.`TimeStamp` AS `TimeStamp`,`AuditTrail`.`Level` AS `Level`,`AuditTrail`.`Tag` AS `Tag`,
+   `AuditTrail`.`Message` AS `Message`,`AuditTrail`.`DataIn` AS `DataIn`,`AuditTrail`.`DataOut` AS `DataOut`,
+   `AuditTrail`.`TerminalID` AS `TerminalID`,`AuditTrail`.`FKUser` AS `FKUser`,`AuditTrail`.`ItemID` AS `ItemID`,
+   `AuditTrail`.`ItemType` AS `ItemType` 
+from 
+   `AuditTrail` 
+order by 
+   `AuditTrail`.`PK` desc 
+limit 100;
 ";
 
-
-#if DEVAO
-     public static readonly string SQLCreate_PGSQL =
-@"
-CREATE TABLE public.audittrail (
-   pk BIGSERIAL,
-   ""timestamp"" TIMESTAMP WITHOUT TIME ZONE NOT NULL, --DEFAULT now()
-   timestampapp TIMESTAMP WITHOUT TIME ZONE,
-   timestampdb TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-   parent BIGINT,
-   isbusiness BOOLEAN DEFAULT false,
-   level INTEGER NOT NULL,
-   tag VARCHAR(128) NOT NULL,
-   application VARCHAR(32),
-   message VARCHAR(1024) NOT NULL,
-   ticks BIGINT,
-   datain TEXT,
-   dataintype VARCHAR(128),
-   dataout TEXT,
-   dataouttype VARCHAR(128),
-   terminalid VARCHAR(128),
-   terminalip VARCHAR(128),
-   fkuser VARCHAR(128),
-   itemid VARCHAR(128),
-   itemtype VARCHAR(128),
-   fkstructure BIGINT DEFAULT '-1'::integer,
-   CONSTRAINT pk_audittrail PRIMARY KEY(pk)
-) 
-WITH(oids = true);
-
-CREATE INDEX ix_audittrail_app ON public.audittrail
-   USING btree(application);
-
-CREATE INDEX ix_audittrail_level ON public.audittrail
-   USING btree(level);
-
-CREATE INDEX ix_audittrail_tag ON public.audittrail
-   USING btree(tag);
-
-CREATE INDEX ix_audittrail_ts ON public.audittrail
-   USING btree(""timestamp"");
+      public static readonly string PostScript_PGSQL = @"
+CREATE OR REPLACE VIEW public.audittrail_v_last100
+AS
+SELECT audittrail.pk, audittrail.""timestamp"", audittrail.level, audittrail.tag, audittrail.message,
+audittrail.datain, audittrail.dataout, audittrail.terminalid, audittrail.fkuser, audittrail.itemid, audittrail.itemtype
+FROM audittrail
+ORDER BY audittrail.pk DESC
+LIMIT 100;
 ";
-#else
-      public static readonly string SQLCreate_PGSQL =
-@"
-CREATE TABLE public.audittrail (
-   pk BIGSERIAL,
-   ""timestamp"" TIMESTAMP WITHOUT TIME ZONE NOT NULL, --DEFAULT now()
-   timestampapp TIMESTAMP WITHOUT TIME ZONE,
-   timestampdb TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-   parent BIGINT,
-   isbusiness BOOLEAN DEFAULT false,
-   level INTEGER NOT NULL,
-   tag VARCHAR(128) NOT NULL,
-   application VARCHAR(32),
-   message VARCHAR(1024) NOT NULL,
-   ticks BIGINT,
-   datain TEXT,
-   dataintype VARCHAR(128),
-   dataout TEXT,
-   dataouttype VARCHAR(128),
-   terminalid VARCHAR(128),
-   terminalip VARCHAR(128),
-   fkuser VARCHAR(128),
-   itemid VARCHAR(128),
-   itemtype VARCHAR(128),
-   fkextern BIGINT DEFAULT '-1'::integer,
-   CONSTRAINT pk_audittrail PRIMARY KEY(pk)
-) 
-WITH(oids = true);
-
-CREATE INDEX ix_audittrail_app ON public.audittrail
-   USING btree(application);
-
-CREATE INDEX ix_audittrail_level ON public.audittrail
-   USING btree(level);
-
-CREATE INDEX ix_audittrail_tag ON public.audittrail
-   USING btree(tag);
-
-CREATE INDEX ix_audittrail_ts ON public.audittrail
-   USING btree(""timestamp"");
-";
-#endif
 
       #endregion
 
@@ -230,13 +72,6 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
          TimeStamp = DateTime.Now;
          Level = ErrorLevel.Log;
          Tag = "";
-
-#if DEVAO
-         FKStructure = -1;
-#else
-         FKExtern = -1;
-#endif
-
       }
 
       public AuditTrail(Exception ex, TextFormat textFormat = TextFormat.Txt)
@@ -245,12 +80,6 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
          Level = ErrorLevel.Critical;
          Tag = "Exception";
-
-#if DEVAO
-         FKStructure = -1;
-#else
-         FKExtern = -1;
-#endif
 
          if (ex != null)
          {
@@ -381,11 +210,6 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
       [DB_Attributes.MaxLength(128)]
       public string ItemType { get; set; }
 
-#if DEVAO
-      public Int64 FKStructure { get; set; }
-#else
-      public Int64 FKExtern { get; set; }
-#endif
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
       [JsonIgnore]
