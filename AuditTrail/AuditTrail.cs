@@ -14,6 +14,7 @@ namespace ZPF.AT
    public class AuditTrail
    {
       #region SQLCreate
+
       public static readonly string SQLCreate_SQLite =
 @"
 CREATE TABLE IF NOT EXISTS AuditTrail(
@@ -56,7 +57,10 @@ FROM   AuditTrail
 ORDER BY PK DESC;
 ";
 
-      public static readonly string SQLCreate_MSSQL =
+      // DB_SQL.CreateTable( AuditTrail );
+      // DB_SQL.CreateTable( AuditTrail, AuditTrail.SQLCreate_MSSQL );
+
+      public static readonly string SQLCreate_MSSQL = 
 @"
 CREATE TABLE [dbo].[AuditTrail] (
    [PK]             BIGINT         IDENTITY (1000, 1) NOT NULL,
@@ -209,6 +213,7 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
    USING btree(""timestamp"");
 ";
 #endif
+
       #endregion
 
       // - - -  - - - 
@@ -297,15 +302,17 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       // - - -  - - - 
 
-      [DB_Attributes.PrimaryKey]
+      [DB_Attributes.PrimaryKey(true)]
       public Int64 PK { get; set; }
 
+      [DB_Attributes.Index()]
       public DateTime TimeStamp { get; set; }
       [JsonIgnore]
       public DateTime TimeStampApp { get; set; }
       [JsonIgnore]
       public DateTime TimeStampDB { get; set; }
 
+      [DB_Attributes.Index()]
       public ErrorLevel Level { get; set; }
 
       [JsonIgnore]
@@ -327,8 +334,16 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
 
       public Int64 Parent { get; set; }
       public bool IsBusiness { get; set; }
+
+      [DB_Attributes.Index()]
+      [DB_Attributes.MaxLength(32)]
       public string Tag { get; set; }
+
+      [DB_Attributes.Index()]
+      [DB_Attributes.MaxLength(128)]
       public string Application { get; set; }
+
+      [DB_Attributes.MaxLength(512)]
       public string Message { get; set; }
 
       public Int64 Ticks { get; set; }
@@ -341,16 +356,29 @@ CREATE INDEX ix_audittrail_ts ON public.audittrail
          set => Ticks = value.Ticks;
       }
 
+      [DB_Attributes.MaxLength(-1)]
       public string DataIn { get; set; }
+      [DB_Attributes.MaxLength(32)]
       public string DataInType { get; set; }
+
+      [DB_Attributes.MaxLength(-1)]
       public string DataOut { get; set; }
+      [DB_Attributes.MaxLength(32)]
       public string DataOutType { get; set; }
 
+      [DB_Attributes.MaxLength(128)]
       public string TerminalID { get; set; }
+
+      [DB_Attributes.MaxLength(128)]
       public string TerminalIP { get; set; }
 
+      [DB_Attributes.MaxLength(128)]
       public string FKUser { get; set; }
+
+      [DB_Attributes.MaxLength(128)]
       public string ItemID { get; set; }
+
+      [DB_Attributes.MaxLength(128)]
       public string ItemType { get; set; }
 
 #if DEVAO
