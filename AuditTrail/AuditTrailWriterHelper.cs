@@ -229,27 +229,30 @@ namespace ZPF.AT
 
          if (Result)
          {
-            TStrings SQL = new TStrings();
+            // - - -  - - - 
+
+            #region Create table & co 
+
+            string SQL = "";
 
             switch (_dBSQLViewModel.DBType)
             {
-               case DBType.SQLServer:
-                  SQL.Text = AuditTrail.SQLCreate_MSSQL; break;
+               case DBType.SQLServer: SQL = AuditTrail.PostScript_MSSQL; break;
 
-               case DBType.PostgreSQL:
-                  SQL.Text = AuditTrail.SQLCreate_PGSQL; break;
+               case DBType.SQLite: SQL = AuditTrail.PostScript_SQLite; break;
 
-               case DBType.MySQL:
-                  SQL.Text = AuditTrail.SQLCreate_MySQL; break;
+               case DBType.PostgreSQL: SQL = AuditTrail.PostScript_PGSQL; break;
 
-               case DBType.SQLite:
-                  SQL.Text = AuditTrail.SQLCreate_SQLite; break;
-
-               default:
-                  throw new NotImplementedException();
+               case DBType.MySQL: SQL = AuditTrail.PostScript_MySQL; break;
             };
 
-            Result = DB_SQL.RunScript(_dBSQLViewModel, "", SQL);
+            // - - -  - - - 
+
+            DB_SQL.CreateTable(_dBSQLViewModel, typeof(AuditTrail), SQL, "");
+
+            #endregion
+
+            // - - -  - - - 
 
             if (!Result)
             {
