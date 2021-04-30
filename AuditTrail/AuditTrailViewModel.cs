@@ -185,6 +185,7 @@ namespace ZPF.AT
 
          CompleteMessage(ref message);
 
+         // https://github.com/VOIP-PARTNERS/CallBooster/issues/118
          // https://appcenter.ms/orgs/VOIP-PARTNERS/apps/CallBooster-1/crashes/errors/2244476178u/overview
          try
          {
