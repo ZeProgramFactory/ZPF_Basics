@@ -185,9 +185,13 @@ namespace ZPF.AT
 
          CompleteMessage(ref message);
 
-         //Logs.Add(message);
-         Logs.Insert(0, message);
-         OnPropertyChanged("Logs");
+         // https://appcenter.ms/orgs/VOIP-PARTNERS/apps/CallBooster-1/crashes/errors/2244476178u/overview
+         try
+         {
+            Logs.Insert(0, message);
+            OnPropertyChanged("Logs");
+         }
+         catch { };
 
          if (Debugger.IsAttached)
          {
