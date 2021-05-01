@@ -187,12 +187,16 @@ namespace ZPF.AT
 
          // https://github.com/VOIP-PARTNERS/CallBooster/issues/118
          // https://appcenter.ms/orgs/VOIP-PARTNERS/apps/CallBooster-1/crashes/errors/2244476178u/overview
-         try
+         if (Logs.Count > 0)
          {
             Logs.Insert(0, message);
-            OnPropertyChanged("Logs");
          }
-         catch { };
+         else
+         {
+            Logs.Add(message);
+         };
+
+         OnPropertyChanged("Logs");
 
          if (Debugger.IsAttached)
          {
