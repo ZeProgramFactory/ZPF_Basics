@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using ZPF.AT;
 
 namespace ZPF
 {
@@ -20,8 +8,10 @@ namespace ZPF
    /// </summary>
    public partial class AuditTrail_Details_Page : Page
    {
-      public AuditTrail_Details_Page()
+      public AuditTrail_Details_Page(AuditTrailViewModel _AuditTrailViewModel)
       {
+         DataContext = _AuditTrailViewModel;
+
          InitializeComponent();
       }
    }

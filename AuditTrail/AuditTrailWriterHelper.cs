@@ -14,10 +14,24 @@ namespace ZPF.AT
    {
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -
 
-      public static string GetWhere(AuditTrailViewModel sender, bool ShowUser = true)
+      public static string GetWhere(DBType dbType, AuditTrailViewModel sender, bool ShowUser = true)
       {
          // String SQL = "SELECT TOP 500 AuditTrail.*, UserAccount.Login FROM AuditTrail LEFT OUTER JOIN UserAccount ON AuditTrail.FKUser = UserAccount.PK WHERE 1=1 ORDER BY AuditTrail.PK DESC";
-         String Where = "LEFT OUTER JOIN UserAccount ON AuditTrail.FKUser = cast(UserAccount.PK as varchar(128)) WHERE 1=1 order by AuditTrail.PK desc";
+         String Where = "";
+
+         switch (dbType)
+         {
+            case DBType.MySQL:
+               // Where = "LEFT OUTER JOIN UserAccount ON AuditTrail.FKUser = cast(UserAccount.PK as varchar(128)) WHERE 1=1 order by AuditTrail.PK desc";
+               Where = "WHERE 1=1 order by AuditTrail.PK desc";
+               break;
+
+            default:
+               // Where = "LEFT OUTER JOIN UserAccount ON AuditTrail.FKUser = cast(UserAccount.PK as varchar(128)) WHERE 1=1 order by AuditTrail.PK desc";
+               Where = "WHERE 1=1 order by AuditTrail.PK desc";
+               break;
+         };
+
 
          if (!ShowUser)
          {
@@ -89,7 +103,7 @@ namespace ZPF.AT
       {
          var AuditTrail = new List<AuditTrail>();
 
-         string Where = GetWhere(sender);
+         string Where = GetWhere(dBSQLViewModel.DBType, sender);
 
          string SQL = DB_SQL.SelectAll(dBSQLViewModel.DBType, "AuditTrail", Where, MaxRecords);
 
@@ -98,6 +112,11 @@ namespace ZPF.AT
             try
             {
                AuditTrail = DB_SQL.Query<AuditTrail>(dBSQLViewModel, SQL);
+
+               if (AuditTrail == null)
+               {
+                  AuditTrail = new List<AuditTrail>();
+               };
             }
             catch (Exception ex)
             {
@@ -266,7 +285,7 @@ namespace ZPF.AT
                return false;
             }
          };
-        return Result;
+         return Result;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -

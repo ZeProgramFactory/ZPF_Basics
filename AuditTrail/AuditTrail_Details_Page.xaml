@@ -6,11 +6,10 @@
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
    mc:Ignorable="d" 
-   DataContext="{Binding Source={StaticResource Locator}, Path=AuditTrail.SelectedAuditTrail}"
    d:DesignHeight="500" d:DesignWidth="300"
    Title="AuditTrail_Details_Page">
 
-   <Grid Background="#2FFF">
+   <Grid Background="#2FFF" DataContext="{Binding SelectedAuditTrail}" >
       <Grid Margin="5">
          <Grid.RowDefinitions>
             <RowDefinition Height="98"/>

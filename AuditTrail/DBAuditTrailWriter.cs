@@ -27,7 +27,7 @@ namespace ZPF.AT
 
       private string GetWhere(AuditTrailViewModel sender, bool ShowUser = true)
       {
-         return AuditTrailWriterHelper.GetWhere(sender, ShowUser);
+         return AuditTrailWriterHelper.GetWhere(_dBSQLViewModel.DBType, sender, ShowUser);
       }
 
 

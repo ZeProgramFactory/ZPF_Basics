@@ -24,47 +24,55 @@ namespace ZPF
    /// </summary>
    public partial class AuditTrailPage : Page
    {
-      public AuditTrailPage(string IniFileName = "")
+      AuditTrailViewModel _AuditTrailViewModel = null;
+
+      public AuditTrailPage(AuditTrailViewModel auditTrailViewModel, string IniFileName = "")
       {
+         DataContext = auditTrailViewModel;
+         _AuditTrailViewModel = auditTrailViewModel;
+
          InitializeComponent();
 
          //dataGridTools = new DataGridTools(IniFileName, "AuditTrail", dataGrid);
 
-         btnGo.FontFamily = ZPF.Fonts.IF.FontFamily;
-         btnGo.FontSize = 24;
-         btnGo.Content = ZPF.Fonts.IF.Filter_Standard;
+         //var FontFamily = new FontFamily(@"./Fonts/IconFont.tft");
 
-         btnClear.FontFamily = ZPF.Fonts.IF.FontFamily;
-         btnClear.FontSize = 24;
-         btnClear.Content = ZPF.Fonts.IF.Filter_Delete;
+         //btnGo.FontFamily = ZPF.Fonts.IF.FontFamily;
+         //btnGo.FontFamily = FontFamily;
+         //btnGo.FontSize = 24;
+         //btnGo.Content = ZPF.Fonts.IF.Filter_Standard;
 
-         btnExcel.FontFamily = ZPF.Fonts.IF.FontFamily;
-         btnExcel.FontSize = 24;
-         btnExcel.Content = ZPF.Fonts.IF.Excel_Online;
+         //btnClear.FontFamily = ZPF.Fonts.IF.FontFamily;
+         //btnClear.FontSize = 24;
+         //btnClear.Content = ZPF.Fonts.IF.Filter_Delete;
 
-         btnPDF.FontFamily = ZPF.Fonts.IF.FontFamily;
-         btnPDF.FontSize = 24;
-         btnPDF.Content = ZPF.Fonts.IF.File_Format_PDF;
+         //btnExcel.FontFamily = ZPF.Fonts.IF.FontFamily;
+         //btnExcel.FontSize = 24;
+         //btnExcel.Content = ZPF.Fonts.IF.Excel_Online;
 
-         image.Source = ZPF.Fonts.IF.GetImageSource( ZPF.Fonts.IF.Foot_print_02[0], Brushes.Black, 512, -40);
+         //btnPDF.FontFamily = ZPF.Fonts.IF.FontFamily;
+         //btnPDF.FontSize = 24;
+         //btnPDF.Content = ZPF.Fonts.IF.File_Format_PDF;
+
+         //image.Source = ZPF.Fonts.IF.GetImageSource( ZPF.Fonts.IF.Foot_print_02[0], Brushes.Black, 512, -40);
 
          // - - -  - - - 
 
          cbFilterLevel.ItemsSource = Enum.GetValues(typeof(ErrorLevel));
-         cbFilterLevel.ComboBox.SelectedItem = AuditTrailViewModel.Current.Level;
+         cbFilterLevel.ComboBox.SelectedItem = _AuditTrailViewModel.Level;
 
-         cbFilterTerminal.ItemsSource = DB_SQL.Query<NameValue>(DBViewModel.Current.Connection, AuditTrailViewModel.Current.GetTerminalSQL());
+         cbFilterTerminal.ItemsSource = DB_SQL.Query<NameValue>(DBViewModel.Current.Connection, _AuditTrailViewModel.GetTerminalSQL());
          cbFilterTerminal.ComboBox.DisplayMemberPath = "Name";
          cbFilterTerminal.ComboBox.SelectedValuePath = "Value";
-         cbFilterTerminal.ComboBox.SelectedItem = AuditTrailViewModel.Current.TerminalID;
+         cbFilterTerminal.ComboBox.SelectedItem = _AuditTrailViewModel.TerminalID;
 
-         cbFilterUser.ItemsSource = DB_SQL.Query<NameValue>(DBViewModel.Current.Connection, AuditTrailViewModel.Current.GetUserSQL());
+         cbFilterUser.ItemsSource = DB_SQL.Query<NameValue>(DBViewModel.Current.Connection, _AuditTrailViewModel.GetUserSQL());
          cbFilterUser.ComboBox.DisplayMemberPath = "Name";
          cbFilterUser.ComboBox.SelectedValuePath = "Value";
-         cbFilterUser.ComboBox.SelectedItem = AuditTrailViewModel.Current.FKUser;
+         cbFilterUser.ComboBox.SelectedItem = _AuditTrailViewModel.FKUser;
 
-         cbFilterChilds.IsChecked = AuditTrailViewModel.Current.Childs;
-         cbFilterDebug.IsChecked = AuditTrailViewModel.Current.IsDebug;
+         cbFilterChilds.IsChecked = _AuditTrailViewModel.Childs;
+         cbFilterDebug.IsChecked = _AuditTrailViewModel.IsDebug;
 
          cbFilterDebug.Visibility = (Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed);
 
@@ -95,13 +103,13 @@ namespace ZPF
          string tempPath = System.IO.Path.GetTempFileName();
 
          ReportEngine report = ReportEngine.Instance;
-         ReportEngine.Instance.ReportSource = DataTable2DataSet(AuditTrailViewModel.Current.AuditTrail.ToDataTable()); ;
+         ReportEngine.Instance.ReportSource = DataTable2DataSet(_AuditTrailViewModel.AuditTrail.ToDataTable()); ;
          ReportingViewModel.Instance.SelectedReport = rep;
 
          report.CurrentReport = rep;
 #endif
 
-         frameBody.Navigate(new AuditTrail_Details_Page());
+         frameBody.Navigate(new AuditTrail_Details_Page(_AuditTrailViewModel));
 
          // - - -  - - - 
 
@@ -352,39 +360,39 @@ namespace ZPF
 
       private void btnGo_Click(object sender, RoutedEventArgs e)
       {
-         AuditTrailViewModel.Current.Level = (ErrorLevel)(cbFilterLevel.ComboBox.SelectedItem);
-         AuditTrailViewModel.Current.TerminalID = (string)cbFilterTerminal.ComboBox.SelectedValue;
-         AuditTrailViewModel.Current.FKUser = (string)cbFilterUser.ComboBox.SelectedValue;
-         AuditTrailViewModel.Current.Childs = cbFilterChilds.IsChecked == true;
-         AuditTrailViewModel.Current.IsDebug = cbFilterDebug.IsChecked == true;
+         _AuditTrailViewModel.Level = (ErrorLevel)(cbFilterLevel.ComboBox.SelectedItem);
+         _AuditTrailViewModel.TerminalID = (string)cbFilterTerminal.ComboBox.SelectedValue;
+         _AuditTrailViewModel.FKUser = (string)cbFilterUser.ComboBox.SelectedValue;
+         _AuditTrailViewModel.Childs = cbFilterChilds.IsChecked == true;
+         _AuditTrailViewModel.IsDebug = cbFilterDebug.IsChecked == true;
 
-         //AuditTrailViewModel.Current.Event = DropDownListEvent.SelectedValue;
+         //_AuditTrailViewModel.Event = DropDownListEvent.SelectedValue;
 
          BackboneViewModel.Current.IncBusy();
 
          DoIt.OnBackground(() =>
          {
-            AuditTrailViewModel.Current.LoadAuditTrail();
+            _AuditTrailViewModel.LoadAuditTrail();
             BackboneViewModel.Current.DecBusy();
          });
       }
 
       private void btnClear_Click(object sender, RoutedEventArgs e)
       {
-         AuditTrailViewModel.Current.Level = ErrorLevel.Info;
-         cbFilterLevel.ComboBox.SelectedItem = AuditTrailViewModel.Current.Level;
+         _AuditTrailViewModel.Level = ErrorLevel.Info;
+         cbFilterLevel.ComboBox.SelectedItem = _AuditTrailViewModel.Level;
 
-         AuditTrailViewModel.Current.TerminalID = "";
-         cbFilterTerminal.ComboBox.SelectedItem = AuditTrailViewModel.Current.TerminalID;
+         _AuditTrailViewModel.TerminalID = "";
+         cbFilterTerminal.ComboBox.SelectedItem = _AuditTrailViewModel.TerminalID;
 
-         AuditTrailViewModel.Current.FKUser = "";
-         cbFilterUser.ComboBox.SelectedItem = AuditTrailViewModel.Current.FKUser;
+         _AuditTrailViewModel.FKUser = "";
+         cbFilterUser.ComboBox.SelectedItem = _AuditTrailViewModel.FKUser;
 
-         AuditTrailViewModel.Current.Childs = false;
-         cbFilterChilds.IsChecked = AuditTrailViewModel.Current.Childs;
+         _AuditTrailViewModel.Childs = false;
+         cbFilterChilds.IsChecked = _AuditTrailViewModel.Childs;
 
-         AuditTrailViewModel.Current.IsDebug = false;
-         cbFilterDebug.IsChecked = AuditTrailViewModel.Current.IsDebug;
+         _AuditTrailViewModel.IsDebug = false;
+         cbFilterDebug.IsChecked = _AuditTrailViewModel.IsDebug;
       }
 
       private void listView_SizeChanged(object sender, SizeChangedEventArgs e)

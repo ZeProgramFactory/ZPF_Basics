@@ -366,7 +366,7 @@ namespace ZPF.AT
       /// </summary>
       /// <param name="Filtered"></param>
       /// <param name="MaxRecords"></param>
-      public void LoadAuditTrail(bool Filtered = true, long MaxRecords = 500)
+      public void editTrail(bool Filtered = true, long MaxRecords = 500)
       {
          LoadAuditTrail(auditTrailWriter, Filtered, MaxRecords);
       }

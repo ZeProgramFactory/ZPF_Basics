@@ -8,15 +8,12 @@
    xmlns:cZPF="clr-namespace:ZPF.Conv"  
    mc:Ignorable="d" 
    d:DesignHeight="480" d:DesignWidth="600"
-   DataContext="{Binding Source={StaticResource Locator}}"
    Title="AuditTrailPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
    <Page.Resources>
       <ResourceDictionary>
          <cZPF:CalcConverter x:Key="Calc" />
          <cZPF:TimeSpanToStringConverter   x:Key="TimeSpanToString" />
-
-         <FontFamily x:Key="FontAwesome">pack://application:,,,/FontAwesome.Net;component/Fonts/#FontAwesome</FontFamily>
       </ResourceDictionary>
 
    </Page.Resources>
@@ -33,7 +30,7 @@
          <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Image x:Name="image" Grid.RowSpan="2" Grid.ColumnSpan="3" Source="/ZPF_DBSQL_WPF;component/Assets/Foot print - 02.512.png" Width="256" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" />
+      <Image x:Name="image" Grid.RowSpan="2" Grid.ColumnSpan="3" Source="/Images/Foot print - 02.512.png" Width="256" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" />
 
       <Grid Grid.ColumnSpan="3" Background="#8DDD">
          <Grid.ColumnDefinitions>
@@ -48,13 +45,13 @@
          <Button Grid.Column="0" x:Name="btnGo" ToolTip="Set filter" 
                     Width="35" Height="35" Margin="5,0,0,0" Click="btnGo_Click" >
             <!--<Label Content="open"/>-->
-            <Image Source="/ZPF_DBSQL_WPF;component/Assets/Filter-Standard.png" Stretch="None" />
+            <Image Source="/Images/Tiles/Filter-Standard.png"  />
          </Button>
 
          <Button Grid.Column="1" x:Name="btnClear" ToolTip="Clear filter" 
                     Width="35" Height="35" Margin="5,0,0,0" Click="btnClear_Click" >
             <!--<Label Content="open"/>-->
-            <Image Source="/ZPF_DBSQL_WPF;component/Assets/Filter-Delete.png" Stretch="None" />
+            <Image Source="/Images/Tiles/Foot print - 02.png" />
          </Button>
 
          <Border Grid.Column="2" >
@@ -71,13 +68,13 @@
          <Button Grid.Column="3" x:Name="btnExcel" ToolTip="Export to Excel" IsEnabled="False" 
                     Width="35" Height="35" Margin="5,0,0,0" Click="btnExcel_Click" >
             <!--<Label Content="open"/>-->
-            <Image Source="/ZPF_DBSQL_WPF;component/Assets/Microsoft-Excel-2013-01.png" Stretch="None" />
+            <Image Source="/Images/Tiles/Microsoft-Excel-2013-01.png"  />
          </Button>
 
          <Button Grid.Column="4" x:Name="btnPDF" ToolTip="Generate a PDF" IsEnabled="False" 
                     Width="35" Height="35" Margin="5,0,0,0" Click="btnPDF_Click" >
             <!--<Label Content="open"/>-->
-            <Image Source="/ZPF_DBSQL_WPF;component/Assets/File-Format-PDF.png" Stretch="None" />
+            <Image Source="/Images/Tiles/File-Format-PDF.png"  />
          </Button>
       </Grid>
 
@@ -89,7 +86,7 @@
 
       <ListView x:Name="listView" Grid.Row="1" Margin="5,0,5,0" 
             BorderBrush="Transparent" Background="#2FFF" 
-            ItemsSource="{Binding AuditTrail.AuditTrail}" SelectedItem="{Binding AuditTrail.SelectedAuditTrail}" >
+            ItemsSource="{Binding AuditTrail}" SelectedItem="{Binding SelectedAuditTrail}" >
 
          <ListView.ItemTemplate >
             <DataTemplate>
