@@ -35,12 +35,15 @@ ORDER BY PK DESC;');
       public static readonly string PostScript_MySQL = @"
 CREATE VIEW `AuditTrail_V_Last100` AS 
 select 
-   `audittrail`.`PK` AS `PK`,`audittrail`.`TimeStamp` AS `TimeStamp`,`audittrail`.`Level` AS `Level`,`audittrail`.`Tag` AS `Tag`, Application, `audittrail`.`Message` AS `Message`,`audittrail`.`DataIn` AS `DataIn`,`audittrail`.`DataOut` AS `DataOut`,`audittrail`.`TerminalID` AS `TerminalID`,`audittrail`.`FKUser` AS `FKUser`,`audittrail`.`ItemID` AS `ItemID`,`audittrail`.`ItemType` AS `ItemType` 
+   `audittrail`.`PK` AS `PK`,`audittrail`.`TimeStamp` AS `TimeStamp`,`audittrail`.`Level` AS `Level`,`audittrail`.`Tag` AS `Tag`, 
+   `application` as `Application`, `audittrail`.`Message` AS `Message`,`audittrail`.`DataIn` AS `DataIn`,`audittrail`.`DataOut` AS `DataOut`,
+   `audittrail`.`TerminalID` AS `TerminalID`,`audittrail`.`FKUser` AS `FKUser`,`audittrail`.`ItemID` AS `ItemID`,`audittrail`.`ItemType` AS `ItemType`
 from 
    `audittrail` 
 order by 
    `audittrail`.`PK` desc 
-limit 100 ;";
+limit 100 ;
+";
 
       public static readonly string PostScript_PGSQL = @"
 CREATE OR REPLACE VIEW public.audittrail_v_last100
