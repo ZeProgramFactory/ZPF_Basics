@@ -394,77 +394,26 @@ namespace ZPF.AT
    {
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
-      #region Debug - IsBusiness = false
-
-      public static void Debug(ErrorLevel error, string Message)
-      {
-         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = false, Level = error, Message = Message });
-      }
-
-      public static void Debug(string Tag, string Message)
-      {
-         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = false, Tag = Tag, Message = Message });
-      }
-
-      public static void Debug(ErrorLevel errorLevel, string Tag, Exception ex, string Data)
-      {
-         var at = new AuditTrail(ex, AuditTrail.TextFormat.TxtEx)
-         {
-            Level = errorLevel,
-            Tag = Tag,
-            IsBusiness = false,
-         };
-
-         at.DataOut = (string.IsNullOrEmpty(Data) ? at.DataOut : Data + Environment.NewLine + Environment.NewLine + at.DataOut);
-
-         AuditTrailViewModel.Current.Write(at);
-      }
-
-      public static void Debug(ErrorLevel error, Exception ex,
-                                    [CallerMemberName] string memberName = "",
-                                    [CallerFilePath] string sourceFilePath = "",
-                                    [CallerLineNumber] int sourceLineNumber = 0)
-      {
-         AuditTrail at = new AuditTrail(ex, AuditTrail.TextFormat.TxtEx)
-         {
-            Level = error,
-            IsBusiness = false,
-         };
-
-         AuditTrailViewModel.Current.Write(at);
-      }
-
-      public static void Debug(AuditTrail auditTrail)
-      {
-         auditTrail.IsBusiness = false;
-         AuditTrailViewModel.Current.Write(auditTrail);
-      }
-
-      #endregion
-
-      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
-
-      #region Write - IsBusiness = true
+      #region Write 
 
       public static void Write(AuditTrail auditTrail)
       {
-         auditTrail.IsBusiness = true;
          AuditTrailViewModel.Current.Write(auditTrail);
       }
 
       public static void Write(string Tag, string Message)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = true, Tag = Tag, Message = Message });
+         AuditTrailViewModel.Current.Write(new AuditTrail { Tag = Tag, Message = Message });
       }
 
       public static void Write(ErrorLevel error, string Tag, string Message)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = true, Level = error, Tag = Tag, Message = Message });
+         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Tag = Tag, Message = Message });
       }
 
       public static void Write(ErrorLevel error, string Message)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { IsBusiness = true, Level = error, Message = Message });
+         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Message = Message });
       }
 
       public static void Write(ErrorLevel error, Exception ex,
@@ -475,7 +424,6 @@ namespace ZPF.AT
          AuditTrail at = new AuditTrail(ex, AuditTrail.TextFormat.TxtEx)
          {
             Level = error,
-            IsBusiness = true,
          };
 
          AuditTrailViewModel.Current.Write(at);
@@ -486,7 +434,6 @@ namespace ZPF.AT
 
       public static long Begin(AuditTrail auditTrail)
       {
-         auditTrail.IsBusiness = true;
          return AuditTrailViewModel.Current.Begin(auditTrail);
       }
 
@@ -583,7 +530,7 @@ namespace ZPF.AT
 
       public static void MessageBox(ErrorLevel errorLevel, Exception ex, string Tag = "")
       {
-         AuditTrail at = new AuditTrail(ex) { Level = errorLevel, IsBusiness = false };
+         AuditTrail at = new AuditTrail(ex) { Level = errorLevel, IsBusiness = true };
          Write(at);
 
          switch (errorLevel)

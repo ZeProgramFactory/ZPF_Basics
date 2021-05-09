@@ -157,7 +157,7 @@ public class BackboneViewModel : BaseViewModel
       {
          if (SetField(ref _BusyTitle, value))
          {
-            Log.Debug("", _BusyTitle);
+            Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusyTitle });
          };
       }
    }
@@ -176,7 +176,7 @@ public class BackboneViewModel : BaseViewModel
          {
             if (!string.IsNullOrEmpty(Prev))
             {
-               Log.Debug("", _BusySubTitle);
+               Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusySubTitle });
 
                _BusyHistory.Add(Prev);
                while (_BusyHistory.Count > 7) _BusyHistory.Delete(0);

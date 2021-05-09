@@ -27,7 +27,7 @@ limit 100;
       public static readonly string PostScript_MSSQL = @"
 EXECUTE('CREATE VIEW [AuditTrail_V_Last100]
 AS
-SELECT TOP (100) PK, TimeStamp, [Level], Tag, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
+SELECT TOP (100) PK, TimeStamp, [Level], Tag, Application, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
 FROM   AuditTrail
 ORDER BY PK DESC;');
 ";
@@ -35,21 +35,17 @@ ORDER BY PK DESC;');
       public static readonly string PostScript_MySQL = @"
 CREATE VIEW `AuditTrail_V_Last100` AS 
 select 
-   `AuditTrail`.`PK` AS `PK`,`AuditTrail`.`TimeStamp` AS `TimeStamp`,`AuditTrail`.`Level` AS `Level`,`AuditTrail`.`Tag` AS `Tag`,
-   `AuditTrail`.`Message` AS `Message`,`AuditTrail`.`DataIn` AS `DataIn`,`AuditTrail`.`DataOut` AS `DataOut`,
-   `AuditTrail`.`TerminalID` AS `TerminalID`,`AuditTrail`.`FKUser` AS `FKUser`,`AuditTrail`.`ItemID` AS `ItemID`,
-   `AuditTrail`.`ItemType` AS `ItemType` 
+   `audittrail`.`PK` AS `PK`,`audittrail`.`TimeStamp` AS `TimeStamp`,`audittrail`.`Level` AS `Level`,`audittrail`.`Tag` AS `Tag`, Application, `audittrail`.`Message` AS `Message`,`audittrail`.`DataIn` AS `DataIn`,`audittrail`.`DataOut` AS `DataOut`,`audittrail`.`TerminalID` AS `TerminalID`,`audittrail`.`FKUser` AS `FKUser`,`audittrail`.`ItemID` AS `ItemID`,`audittrail`.`ItemType` AS `ItemType` 
 from 
-   `AuditTrail` 
+   `audittrail` 
 order by 
-   `AuditTrail`.`PK` desc 
-limit 100;
-";
+   `audittrail`.`PK` desc 
+limit 100 ;";
 
       public static readonly string PostScript_PGSQL = @"
 CREATE OR REPLACE VIEW public.audittrail_v_last100
 AS
-SELECT audittrail.pk, audittrail.""timestamp"", audittrail.level, audittrail.tag, audittrail.message,
+SELECT audittrail.pk, audittrail.""timestamp"", audittrail.level, audittrail.tag, audittrail.application, audittrail.message,
 audittrail.datain, audittrail.dataout, audittrail.terminalid, audittrail.fkuser, audittrail.itemid, audittrail.itemtype
 FROM audittrail
 ORDER BY audittrail.pk DESC
