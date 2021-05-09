@@ -173,7 +173,8 @@ namespace ZPF.AT
             {
                Debug.WriteLine("AuditTrailViewWriter LastError: " + dBSQLViewModel.LastError + Environment.NewLine
                               + "AuditTrailViewWriter LastQuery: " + dBSQLViewModel.LastQuery);
-               Log.Debug(new AuditTrail
+
+               Log.Write(new AuditTrail
                {
                   Message = "AuditTrailViewWriter LastError: " + dBSQLViewModel.LastError + Environment.NewLine
                                                       + "AuditTrailViewWriter LastQuery: " + dBSQLViewModel.LastQuery
@@ -183,7 +184,8 @@ namespace ZPF.AT
          catch (Exception ex)
          {
             System.Diagnostics.Debug.WriteLine("AuditTrailViewWriter: " + ex.Message);
-            Log.Debug(new AuditTrail
+
+            Log.Write(new AuditTrail
             {
                Message = "AuditTrailViewWriter: " + ex.Message
             });
