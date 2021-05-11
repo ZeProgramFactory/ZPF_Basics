@@ -385,6 +385,19 @@ namespace ZPF.AT
          };
       }
 
+      /// <summary>
+      /// Loads logs from file/db to property AuditTrail
+      /// </summary>
+      /// <param name="Filtered"></param>
+      /// <param name="MaxRecords"></param>
+      public void LoadAuditTrail(bool Filtered = true, long MaxRecords = 500)
+      {
+         if (auditTrailWriter != null)
+         {
+            AuditTrail = auditTrailWriter.LoadAuditTrail(this, Filtered, MaxRecords);
+         };
+      }
+
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
    }
 
