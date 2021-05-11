@@ -172,6 +172,9 @@ LIMIT 100;
       public string Application { get; set; }
 
       [DB_Attributes.MaxLength(512)]
+      public string Source { get; set; }
+
+      [DB_Attributes.MaxLength(512)]
       public string Message { get; set; }
 
       public Int64 Ticks { get; set; }

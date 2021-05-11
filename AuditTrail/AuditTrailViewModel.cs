@@ -396,24 +396,44 @@ namespace ZPF.AT
 
       #region Write 
 
-      public static void Write(AuditTrail auditTrail)
+      public static void Write(AuditTrail auditTrail,
+                                 [CallerMemberName] string memberName = "",
+                                 [CallerFilePath] string sourceFilePath = "",
+                                 [CallerLineNumber] int sourceLineNumber = 0)
       {
+         auditTrail.Source = $"{sourceFilePath}({sourceLineNumber}) - {memberName}";
+
          AuditTrailViewModel.Current.Write(auditTrail);
       }
 
-      public static void Write(string Tag, string Message)
+      public static void Write(string Tag, string Message,
+                                 [CallerMemberName] string memberName = "",
+                                 [CallerFilePath] string sourceFilePath = "",
+                                 [CallerLineNumber] int sourceLineNumber = 0)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { Tag = Tag, Message = Message });
+         var source = $"{sourceFilePath}({sourceLineNumber}) - {memberName}";
+
+         AuditTrailViewModel.Current.Write(new AuditTrail { Tag = Tag, Message = Message, Source = source });
       }
 
-      public static void Write(ErrorLevel error, string Tag, string Message)
+      public static void Write(ErrorLevel error, string Tag, string Message,
+                                 [CallerMemberName] string memberName = "",
+                                 [CallerFilePath] string sourceFilePath = "",
+                                 [CallerLineNumber] int sourceLineNumber = 0)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Tag = Tag, Message = Message });
+         var source = $"{sourceFilePath}({sourceLineNumber}) - {memberName}";
+
+         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Tag = Tag, Message = Message, Source = source });
       }
 
-      public static void Write(ErrorLevel error, string Message)
+      public static void Write(ErrorLevel error, string Message,
+                                 [CallerMemberName] string memberName = "",
+                                 [CallerFilePath] string sourceFilePath = "",
+                                 [CallerLineNumber] int sourceLineNumber = 0)
       {
-         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Message = Message });
+         var source = $"{sourceFilePath}({sourceLineNumber}) - {memberName}";
+
+         AuditTrailViewModel.Current.Write(new AuditTrail { Level = error, Message = Message, Source = source });
       }
 
       public static void Write(ErrorLevel error, Exception ex,
@@ -424,6 +444,7 @@ namespace ZPF.AT
          AuditTrail at = new AuditTrail(ex, AuditTrail.TextFormat.TxtEx)
          {
             Level = error,
+            Source = $"{sourceFilePath}({sourceLineNumber}) - {memberName}",
          };
 
          AuditTrailViewModel.Current.Write(at);
