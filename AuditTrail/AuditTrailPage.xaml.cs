@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,6 +58,11 @@ namespace ZPF
          //image.Source = ZPF.Fonts.IF.GetImageSource( ZPF.Fonts.IF.Foot_print_02[0], Brushes.Black, 512, -40);
 
          // - - -  - - - 
+
+         if (DBViewModel.Current.AllTables.Where(x => x.TableName == "AuditTrail").Count() < 1)
+         {
+            return;
+         };
 
          cbFilterLevel.ItemsSource = Enum.GetValues(typeof(ErrorLevel));
          cbFilterLevel.ComboBox.SelectedItem = _AuditTrailViewModel.Level;
