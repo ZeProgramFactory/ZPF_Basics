@@ -104,6 +104,23 @@ namespace ZPF.SQL
 
       // - - -  - - - 
 
+      /// <summary>
+      /// Creates a virtual field that will be created in the DB tables 
+      /// but not stored in memory (e.g. prevent that blobd are loaded into memory)
+      /// </summary>
+      [AttributeUsage(AttributeTargets.Property)]
+      public class VirtualFieldAttribute : Attribute
+      {
+         public VirtualFieldAttribute(IField field)
+         {
+            Field = field;
+         }
+
+         public IField Field { get; }
+      }
+
+      // - - -  - - - 
+
       [AttributeUsage(AttributeTargets.Property)]
       public class IgnoreImportAttribute : Attribute
       {
