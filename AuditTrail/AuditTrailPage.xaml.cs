@@ -249,9 +249,14 @@ namespace ZPF
          //if (ReportingViewModel.Instance.AutoLaunch && File.Exists(dlg.FileName))
          if (File.Exists(FileName))
          {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = FileName;
-            process.Start();
+                     //new Process
+         {
+            StartInfo = new ProcessStartInfo(FileName)
+            {
+               UseShellExecute = true
+            }
+         }.Start();
+
          };
 #endif
       }
@@ -302,9 +307,14 @@ namespace ZPF
          // if (ReportingViewModel.Instance.AutoLaunch && File.Exists(dlg.FileName))
          if (Result && File.Exists(FileName))
          {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = FileName;
-            process.Start();
+         new Process
+         {
+            StartInfo = new ProcessStartInfo(FileName)
+            {
+               UseShellExecute = true
+            }
+         }.Start();
+
          };
 #endif
       }
