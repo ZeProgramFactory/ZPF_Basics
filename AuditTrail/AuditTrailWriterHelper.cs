@@ -243,7 +243,7 @@ namespace ZPF.AT
          if (!_dBSQLViewModel.CheckConnection()) return false;
 
          DB_SQL.QuickQueryInt(_dBSQLViewModel, "select PK from AuditTrail where 1=2");
-         if (DB_SQL._ViewModel.LastError == "")
+         if (DB_SQL._ViewModel != null && DB_SQL._ViewModel.LastError == "")
          {
             return true;
          };

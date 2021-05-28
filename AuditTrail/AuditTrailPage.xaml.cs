@@ -59,6 +59,11 @@ namespace ZPF
 
          // - - -  - - - 
 
+         if (DBViewModel.Current.AllTables == null)
+         {
+            return;
+         };
+
          if (DBViewModel.Current.AllTables.Where(x => x.TableName == "AuditTrail").Count() < 1)
          {
             return;
