@@ -69,6 +69,14 @@ namespace ZPF.SQL
       {
       }
 
+      /// <summary>
+      /// Field contains JSON
+      /// </summary>
+      [AttributeUsage(AttributeTargets.Property)]
+      public class JsonAttribute : Attribute
+      {
+      }
+
       [AttributeUsage(AttributeTargets.Class)]
       public class TableNameAttribute : Attribute
       {
