@@ -258,7 +258,7 @@ namespace ZPF.AT
 
             switch (_dBSQLViewModel.DBType)
             {
-               case DBType.Firebird: return false; break;  // ToDo CHM 
+               case DBType.Firebird: return false;    // ToDo CHM 
 
                case DBType.SQLServer: SQL = AuditTrail.PostScript_MSSQL; break;
 
