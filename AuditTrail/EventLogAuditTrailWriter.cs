@@ -56,8 +56,8 @@ namespace ZPF.AT
 
             if (eventLogEntryType == EventLogEntryType.Error)
             {
-               //eventLog.WriteEntry(message.Message, eventLogEntryType, 0815, 4711, null);
-               eventLog.WriteEntry(message.Message, eventLogEntryType);
+               //KO eventLog.WriteEntry(message.Message, eventLogEntryType, 0815, 4711, null);
+               //KO eventLog.WriteEntry(message.Message, eventLogEntryType);
             };
          }
 
