@@ -28,6 +28,12 @@ namespace ZPF
       {
       }
 
+      public ColDef(string name)
+      {
+         Name = name;
+         Header = name;
+      }
+
       public ColDef(string name, string header, double width)
       {
          Name = name;
