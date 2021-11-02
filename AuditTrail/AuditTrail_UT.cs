@@ -63,9 +63,12 @@ namespace ZPF.AT
          var path = System.IO.Path.GetTempFileName();
 
          AuditTrailViewModel.Current.Init(new JSONAuditTrailWriter(path));
+         ZPF.AT.AuditTrailViewModel.Current.MaxLines = 2000;
+         ZPF.AT.AuditTrailViewModel.Current.Clean();
+
          Log.WriteHeader("Cassini", "V1.23", $"");
 
-         AuditTrailViewModel.Current.Logs.Clear();
+        // AuditTrailViewModel.Current.Logs.Clear();
 
          var DT = DateTime.Now;
 
