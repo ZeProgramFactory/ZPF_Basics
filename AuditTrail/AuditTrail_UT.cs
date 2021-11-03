@@ -63,12 +63,10 @@ namespace ZPF.AT
          var path = System.IO.Path.GetTempFileName();
 
          AuditTrailViewModel.Current.Init(new JSONAuditTrailWriter(path));
-         ZPF.AT.AuditTrailViewModel.Current.MaxLines = 2000;
-         ZPF.AT.AuditTrailViewModel.Current.Clean();
 
          Log.WriteHeader("Cassini", "V1.23", $"");
 
-        // AuditTrailViewModel.Current.Logs.Clear();
+         AuditTrailViewModel.Current.Logs.Clear();
 
          var DT = DateTime.Now;
 
@@ -222,5 +220,34 @@ namespace ZPF.AT
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+      [TestMethod]
+      public void AuditTrail_JSONClean()
+      {
+         var path = System.IO.Path.GetTempFileName();
+
+         AuditTrailViewModel.Current.Init(new JSONAuditTrailWriter("AT_TestClean.txt"));
+         Log.WriteHeader("AT TestClean", "V0.1", $"");
+         //for (int i = 0; i < 2500; i++)
+         //{
+         //   Log.Write(ErrorLevel.Info, $"Test {i}");
+         //}
+         ZPF.AT.AuditTrailViewModel.Current.MaxLines = 200;
+         ZPF.AT.AuditTrailViewModel.Current.Clean();
+
+         Log.WriteHeader("AT TestClean", "V0.11", $"");
+
+         // AuditTrailViewModel.Current.Logs.Clear();
+
+         var DT = DateTime.Now;
+
+
+         var ts = DateTime.Now - DT;
+         Log.Write(ErrorLevel.Info, ts.TotalSeconds.ToString());
+
+         Assert.AreEqual(true, AuditTrailViewModel.Current.Logs.Count == 4);
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
    }
 }
