@@ -614,6 +614,12 @@ namespace ZPF
          }
          catch (Exception ex)
          {
+            Log.Write(new AuditTrail(ex)
+            {
+                Application= "wsHelper.wPost_String1",
+                DataOut=json,
+            });
+
             LastError = ex.Message;
             Debug.WriteLine(ex.Message);
 
