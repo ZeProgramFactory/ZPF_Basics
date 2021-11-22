@@ -16,6 +16,7 @@ namespace ZPF
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
       public static string wsServer = "";
+      public static string wsServerDoc = "";
       public static HttpClient _httpClient = null;
       public static TStrings Logs = new TStrings();
 
