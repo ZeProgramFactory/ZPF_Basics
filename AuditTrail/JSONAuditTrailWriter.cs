@@ -33,6 +33,10 @@ namespace ZPF.AT
          if (System.IO.File.Exists(outputFile))
          {
             json = File.ReadAllText(outputFile);
+         }
+         else
+         {
+            return;
          };
 
          if (_FileType == FileTypes.FullJSON)
@@ -42,7 +46,7 @@ namespace ZPF.AT
          else
          {
             json = File.ReadAllText(outputFile);
-            json = json + "}";
+            json = json + "]";
          };
 
          try
@@ -55,6 +59,14 @@ namespace ZPF.AT
             };
 
             json = JsonSerializer.Serialize(Lines);
+
+            if (_FileType == FileTypes.FullJSON)
+            {
+            }
+            else
+            {
+               json = json.Substring(0, json.Length - 1);
+            };
 
             File.WriteAllText(outputFile, json, System.Text.Encoding.ASCII);
          }
@@ -88,7 +100,7 @@ namespace ZPF.AT
          else
          {
             json = File.ReadAllText(outputFile);
-            json = json + "}";
+            json = json + "]";
          };
 
          try
@@ -176,7 +188,7 @@ namespace ZPF.AT
                }
                else
                {
-                  File.AppendAllLines(outputFile, new[] { "{" + Line });
+                  File.AppendAllLines(outputFile, new[] { "[" + Line });
                };
             }
             catch (Exception ex)
