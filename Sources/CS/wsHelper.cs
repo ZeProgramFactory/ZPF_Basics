@@ -67,6 +67,8 @@ namespace ZPF
 
       public static string LastError { get; set; }
       public static string LastData { get; set; }
+      public static TimeSpan LastTripDuration { get; set; }
+      public static long LastReceivedDataSize { get; set; }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
@@ -164,9 +166,14 @@ namespace ZPF
             {
                //               _httpClient.Timeout = TimeSpan.FromMinutes(3);
 
+               var dt = DateTime.Now;
                var st = await _httpClient.GetStringAsync(uri);
+
+               LastTripDuration = (DateTime.Now - dt);
                LastError = st;
+
                byte[] r1 = Convert.FromBase64String(st);
+               LastReceivedDataSize = r1.Length;
 
                //byte[] r1 = await _httpClient.GetByteArrayAsync(uri);
 
@@ -177,7 +184,12 @@ namespace ZPF
             }
             else
             {
+               var dt = DateTime.Now;
+
                LastData = await _httpClient.GetStringAsync(uri);
+
+               LastTripDuration = (DateTime.Now - dt);
+               LastReceivedDataSize = LastData.Length;
             };
          }
          catch (Exception ex)
