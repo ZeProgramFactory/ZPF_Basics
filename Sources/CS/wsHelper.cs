@@ -289,7 +289,13 @@ namespace ZPF
          try
          {
             _httpClient.Timeout = TimeSpan.FromSeconds(20);
+
+            var dt = DateTime.Now;
+
             byte[] byteArray = await _httpClient.GetByteArrayAsync(uri);
+
+            LastTripDuration = (DateTime.Now - dt);
+            LastReceivedDataSize = byteArray.Length;
 
             return new System.IO.MemoryStream(byteArray);
          }
@@ -332,9 +338,13 @@ namespace ZPF
 
          try
          {
+            var dt = DateTime.Now;
+
             _httpClient.Timeout = TimeSpan.FromSeconds(20);
             byte[] byteArray = await _httpClient.GetByteArrayAsync(uri);
 
+            LastTripDuration = (DateTime.Now - dt);
+            LastReceivedDataSize = byteArray.Length;
 #if XF
             ZPF.XF.Basics.Current.FileIO.WriteStream(new System.IO.MemoryStream(byteArray), FilePath);
 #else
