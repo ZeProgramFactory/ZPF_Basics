@@ -25,10 +25,10 @@ limit 100;
 ";
 
       public static readonly string PostScript_MSSQL = @"
-EXECUTE('CREATE VIEW [dbo][AuditTrail_V_Last100]
+EXECUTE('CREATE VIEW [dbo].[AuditTrail_V_Last100]
 AS
 SELECT TOP (100) PK, TimeStamp, [Level], Tag, Application, Message, DataIn, DataOut, TerminalID, FKUser, ItemID, ItemType
-FROM   AuditTrail
+FROM   [dbo].[AuditTrail]
 ORDER BY PK DESC;');
 ";
 
