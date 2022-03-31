@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Text.Json; // Install-Package System.Text.Json 
 using System.Xml.Serialization;
 using ZPF.AT;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 
 namespace ZPF
 {
@@ -649,8 +651,84 @@ namespace ZPF
             return null;
          };
       }
-      
+
       #endregion
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      // https://stackoverflow.com/questions/11862890/c-how-to-execute-a-http-request-using-sockets
+      //ToDo: redirection HTTP -> HTTPS
+      //ToDo: get response code
+
+      /// <summary>
+      ///  Console.WriteLine(wMyGet(MainViewModel.Current.URLPie02, 80, "/dump"));
+      ///  Console.WriteLine(wMyGet("wsmshop.storecheck.pro", 80, "/Tools/Now"));
+      /// </summary>
+      /// <param name="ip"></param>
+      /// <param name="port"></param>
+      /// <param name="function"></param>
+      /// <returns></returns>
+      public static string wMyGet(string ip, int port = 80, string function = @"/")
+      {
+         var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+         socket.Connect(ip, port);
+
+         string GETrequest = $"GET {function} HTTP/1.1\r\nHost: {ip}\r\nConnection: keep-alive\r\nAccept: text/html\r\nUser-Agent: CSharpTests\r\n\r\n";
+         // var request = "GET /register?id=application/vnd-fullphat.test&title=My%20Test%20App HTTP/1.1\r\n Host: 127.0.0.1\r\n Content-Length: 0\r\n\r\n";
+
+         socket.Send(Encoding.ASCII.GetBytes(GETrequest));
+
+         bool flag = true; // just so we know we are still reading
+         string headerString = ""; // to store header information
+         int contentLength = 0; // the body length
+         byte[] bodyBuff = new byte[0]; // to later hold the body content
+
+         while (flag)
+         {
+            // read the header byte by byte, until \r\n\r\n
+            byte[] buffer = new byte[1];
+            socket.Receive(buffer, 0, 1, 0);
+            headerString += Encoding.ASCII.GetString(buffer);
+
+            if (headerString.Contains("\r\n\r\n") || headerString.Contains("\0"))
+            {
+               try
+               {
+                  // header is received, parsing content length
+                  // I use regular expressions, but any other method you can think of is ok
+                  Regex reg = new Regex("\\\r\nContent-Length: (.*?)\\\r\n");
+                  Match m = reg.Match(headerString);
+                  contentLength = int.Parse(m.Groups[1].ToString());
+                  flag = false;
+
+                  // read the body
+                  bodyBuff = new byte[contentLength];
+                  socket.Receive(bodyBuff, 0, contentLength, 0);
+               }
+               catch (Exception ex)
+               {
+                  socket.Close();
+
+                  LastError = ex.Message;
+
+                  if (LastError == "Input string was not in a correct format.")
+                  {
+                     LastError = "Missing or broken header.";
+                  };
+
+                  return headerString;
+               };
+            }
+         }
+
+         //  - - - Server Response - - -
+
+         string body = Encoding.ASCII.GetString(bodyBuff);
+         socket.Close();
+
+         return body;
+      }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
    }
