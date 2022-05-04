@@ -135,6 +135,8 @@ namespace ZPF.AT
 
          try
          {
+            message.TimeStamp = message.TimeStamp.ToUniversalTime();
+            
             DB_SQL.Insert(dBSQLViewModel, message);
 
             if (!string.IsNullOrEmpty(dBSQLViewModel.LastError))
