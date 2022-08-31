@@ -40,14 +40,18 @@ namespace ZPF
 
       public static Uri CalcURI(string function)
       {
-         if (string.IsNullOrEmpty(wsServer) && ! function.ToUpper().StartsWith("HTTP") )
+         if (string.IsNullOrEmpty(wsServer) && !function.ToUpper().StartsWith("HTTP"))
          {
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          if (string.IsNullOrEmpty(function))
          {
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          if (!string.IsNullOrEmpty(wsServer) && !wsServer.EndsWith("/"))
@@ -86,7 +90,9 @@ namespace ZPF
 
          if (uri == null)
          {
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          return await wGet(uri, basicAuth);
@@ -205,7 +211,7 @@ namespace ZPF
          return LastData;
       }
 
-       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
       public static async Task<T> xGet<T>(string Function, string basicAuth = "")
       {
@@ -230,14 +236,14 @@ namespace ZPF
          {
             try
             {
-               ZPF.AT.Log.Write(ZPF.AT.ErrorLevel.Log, $"xGet {Function} {(DateTime.Now-DT).TotalMilliseconds:0.0}ms" );
-              
-                  XmlSerializer serializer = new XmlSerializer(typeof(T));
-                  StringReader stringReader = new StringReader(xmlString);
-                  var t = (T)serializer.Deserialize(stringReader);
-                  return t;
-               
-               
+               ZPF.AT.Log.Write(ZPF.AT.ErrorLevel.Log, $"xGet {Function} {(DateTime.Now - DT).TotalMilliseconds:0.0}ms");
+
+               XmlSerializer serializer = new XmlSerializer(typeof(T));
+               StringReader stringReader = new StringReader(xmlString);
+               var t = (T)serializer.Deserialize(stringReader);
+               return t;
+
+
             }
             catch (Exception ex)
             {
@@ -255,7 +261,7 @@ namespace ZPF
          };
       }
 
-      
+
 
       public static async Task<T> xGet<T>(Uri uri, string basicAuth = "")
       {
@@ -307,7 +313,9 @@ namespace ZPF
             Debug.WriteLine(ex.Message);
          };
 
+#pragma warning disable CS8603 // Possible null reference return.
          return null;
+#pragma warning restore CS8603 // Possible null reference return.
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
@@ -382,8 +390,8 @@ namespace ZPF
             return false;
          };
 
-         Logs.Add($"(0) oData={oData != null} { oData.GetType() }");
-         var json = JsonSerializer.Serialize(oData, new JsonSerializerOptions { WriteIndented=true, });
+         Logs.Add($"(0) oData={oData != null} {oData.GetType()}");
+         var json = JsonSerializer.Serialize(oData, new JsonSerializerOptions { WriteIndented = true, });
 
          return await wPost(uri, json);
       }
@@ -395,7 +403,9 @@ namespace ZPF
          if (uri == null)
          {
             LastError = "uri = null";
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          return await wPost_Stream(uri, oData);
@@ -450,7 +460,9 @@ namespace ZPF
          catch (Exception ex)
          {
             LastError = ex.Message;
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
       }
 
@@ -463,7 +475,10 @@ namespace ZPF
          if (uri == null)
          {
             LastError = "uri = null";
+
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          try
@@ -475,7 +490,10 @@ namespace ZPF
          catch (Exception ex)
          {
             LastError = ex.Message;
+
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
       }
 
@@ -488,7 +506,10 @@ namespace ZPF
          if (uri == null)
          {
             LastError = "uri = null";
+
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          try
@@ -500,7 +521,10 @@ namespace ZPF
          catch (Exception ex)
          {
             LastError = ex.Message;
+
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
       }
 
@@ -517,7 +541,10 @@ namespace ZPF
          catch (Exception ex)
          {
             LastError = ex.Message;
+
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
       }
 
@@ -573,7 +600,6 @@ namespace ZPF
       public static async Task<Stream> wPost_Stream(Uri uri, string json, string basicAuth = "")
       {
          LastError = "";
-         string data = "";
 
          try
          {
@@ -604,7 +630,9 @@ namespace ZPF
             LastError = ex.Message;
             Debug.WriteLine(ex.Message);
 
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
 
          return null;
@@ -641,14 +669,16 @@ namespace ZPF
          {
             Log.Write(new AuditTrail(ex)
             {
-                Application= "wsHelper.wPost_String1",
-                DataOut=json,
+               Application = "wsHelper.wPost_String1",
+               DataOut = json,
             });
 
             LastError = ex.Message;
             Debug.WriteLine(ex.Message);
 
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
          };
       }
 
