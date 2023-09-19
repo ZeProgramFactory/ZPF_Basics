@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZPF
+namespace ZPF.Graphics
 {
    /// <summary>
    /// Based on ColorHelper.cs, ...
@@ -193,7 +193,7 @@ namespace ZPF
       /// <returns></returns>
       public Color WithAlpha(byte alpha)
       {
-         return new ZPF.Color((byte)(alpha / 255), Red, Green, Blue);
+         return new ZPF.Graphics.Color((byte)(alpha / 255), Red, Green, Blue);
       }
 
       /// <summary>
@@ -203,7 +203,7 @@ namespace ZPF
       /// <returns></returns>
       public Color WithAlpha(decimal alpha)
       {
-         return new ZPF.Color(alpha, Red, Green, Blue);
+         return new ZPF.Graphics.Color(alpha, Red, Green, Blue);
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 

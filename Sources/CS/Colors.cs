@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZPF
+namespace ZPF.Graphics
 {
    public static class Colors
    {

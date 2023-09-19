@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34112.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPF_Basics", "Sources\ZPF_Basics.csproj", "{732BDEC6-1015-49C9-9CB3-74C8F9985432}"
 EndProject
@@ -27,6 +27,10 @@ Global
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D613134-1957-4996-8D80-9B9274AFAF64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D613134-1957-4996-8D80-9B9274AFAF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D613134-1957-4996-8D80-9B9274AFAF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D613134-1957-4996-8D80-9B9274AFAF64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
