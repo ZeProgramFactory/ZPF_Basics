@@ -7,8 +7,9 @@ using ZPF.AT;
 /// <summary>
 /// 14/01/18 - ME  - NETSTANDARD1_3
 /// 01/02/18 - ME  - --> Std: ZPF_Basics
+/// 22/01/25 - ME  - IsNotBusy
 /// 
-/// 2005..2018 ZePocketForge.com, SAS ZPF
+/// 2005..2025 ZePocketForge.com, SAS ZPF, ZeProgFactory
 /// </summary>
 public class BackboneViewModel : BaseViewModel
 {
@@ -124,6 +125,9 @@ public class BackboneViewModel : BaseViewModel
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
+   /// <summary>
+   /// Gets or sets a value indicating whether the application is busy.
+   /// </summary>
    public bool IsBusy
    {
       get { return _IsBusy; }
@@ -132,6 +136,8 @@ public class BackboneViewModel : BaseViewModel
          if (SetField(ref _IsBusy, value))
          {
             _BusyCounter = (_IsBusy ? _BusyCounter : 0);
+
+            OnPropertyChanged("IsNotBusy");
 
             if (_DoEventsCallBack != null)
             {
@@ -142,6 +148,18 @@ public class BackboneViewModel : BaseViewModel
    }
 
    bool _IsBusy = false;
+
+   /// <summary>
+   /// Gets a value indicating whether the application is not busy.
+   /// </summary>
+   public bool IsNotBusy
+   {
+      get { return ! _IsBusy; }
+      set
+      {
+         IsBusy = !value;
+      }
+   }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
@@ -211,6 +229,10 @@ public class BackboneViewModel : BaseViewModel
 
    bool _Silent = false;
 
+   /// <summary>
+   /// Increment the busy counter.
+   /// </summary>
+   /// <param name="callerMemberName"></param>
    public void IncBusy([CallerMemberName] string callerMemberName = null)
    {
       _BusyCounter++;
