@@ -46,8 +46,8 @@ public class ObservableObject : INotifyPropertyChanged
             if (Debugger.IsAttached)
             {
                Debugger.Break();
-            };
-         };
+            }
+         }
       }
    }
 
