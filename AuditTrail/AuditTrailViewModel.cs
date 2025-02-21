@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using ZPF.SQL;
 
 namespace ZPF.AT;
 
@@ -560,5 +558,42 @@ public static class Log
    #endregion
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+   /// <summary>
+   /// Executes the provided action within a try-catch block and logs any exceptions that occur.
+   /// </summary>
+   /// <param name="action">The action to execute.</param>
+   /// <returns>True if the action executes without exceptions; otherwise, false.</returns>
+   public static bool TryCatch(Action action)
+   {
+      try
+      {
+         action();
+         return true;
+      }
+      catch (Exception ex)
+      {
+         Log.Write(ErrorLevel.Error, ex);
+         return false;
+      }
+   }
+
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+   /// <summary>
+   /// Measures the time taken to execute an action and logs the duration.
+   /// </summary>
+   /// <param name="Message">The message to log along with the duration.</param>
+   /// <param name="action">The action to measure and execute.</param>
+   public static void Chonometer(string Message, Action action)
+   {
+      int Stamp = System.Environment.TickCount;
+      action();
+      TimeSpan dt = TimeSpan.FromMilliseconds(System.Environment.TickCount - Stamp);
+
+      Write(ErrorLevel.Info, $"{Message} : {dt.Hours:00}:{dt.Minutes:00}:{dt.Seconds:00}.{dt.Milliseconds:000}");
+   }
+
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
 }
 
