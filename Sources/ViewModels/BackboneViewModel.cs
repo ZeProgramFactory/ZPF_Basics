@@ -8,39 +8,13 @@ using ZPF.AT;
 /// 14/01/18 - ME  - NETSTANDARD1_3
 /// 01/02/18 - ME  - --> Std: ZPF_Basics
 /// 22/01/25 - ME  - IsNotBusy
+/// 21/02/25 - ME  - --> "BaseViewModel2"
 /// 
 /// 2005..2025 ZePocketForge.com, SAS ZPF, ZeProgFactory
 /// </summary>
-public class BackboneViewModel : BaseViewModel
+public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 {
-   public BackboneViewModel()
-   {
-      _Current = this;
-   }
-
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
-
-   static BackboneViewModel _Current = null;
-
-   public static BackboneViewModel Current
-   {
-      get
-      {
-         if (_Current == null)
-         {
-            _Current = new BackboneViewModel();
-         };
-
-         return _Current;
-      }
-
-      set
-      {
-         _Current = value;
-      }
-   }
-
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    public enum MessageBoxType { Info, Warning, Error, Confirmation }
 
@@ -100,7 +74,7 @@ public class BackboneViewModel : BaseViewModel
       throw new NotImplementedException();
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    Action _DoEventsCallBack = null;
    public void InitDoEventsCallBack(Action DoEventsCallBack)
@@ -123,7 +97,7 @@ public class BackboneViewModel : BaseViewModel
       };
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    /// <summary>
    /// Gets or sets a value indicating whether the application is busy.
@@ -161,11 +135,11 @@ public class BackboneViewModel : BaseViewModel
       }
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    public string DataPath { get; set; }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    string _BusyTitle = "working ...";
    public string BusyTitle
@@ -180,7 +154,7 @@ public class BackboneViewModel : BaseViewModel
       }
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    string _BusySubTitle = "";
    public string BusySubTitle
@@ -205,7 +179,7 @@ public class BackboneViewModel : BaseViewModel
       }
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    public object MainWindow { get; set; }
 
@@ -214,7 +188,7 @@ public class BackboneViewModel : BaseViewModel
    private TStrings _BusyHistory = new TStrings();
    public String BusyHistory { get => _BusyHistory.Text; set { _BusyHistory.Text = value; OnPropertyChanged(); } }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    public bool Silent
    {
@@ -258,7 +232,7 @@ public class BackboneViewModel : BaseViewModel
       Debug.WriteLine("DecBusy " + callerMemberName);
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    private string _CurrentRef = "";
 
@@ -268,7 +242,7 @@ public class BackboneViewModel : BaseViewModel
       set { SetField(ref _CurrentRef, value); }
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    public void Navigate(string Ref)
    {
@@ -288,6 +262,6 @@ public class BackboneViewModel : BaseViewModel
       set { _NavigationCallBack = value; }
    }
 
-   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 }
 

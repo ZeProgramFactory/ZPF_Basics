@@ -425,9 +425,9 @@ namespace ZPF
       /// <param name="source"></param>
       /// <param name="breakingChars"></param>
       /// <returns></returns>
-      public static List<string> GetLines(this string source, string breakingChars = "\r\n")
+      public static List<string> GetLines(this string source, string breakingChars = "\r\n", StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
       {
-         var lines = source.Split(new string[] { breakingChars }, StringSplitOptions.RemoveEmptyEntries);
+         var lines = source.Split(new string[] { breakingChars }, stringSplitOptions);
 
          return lines.GetLines(breakingChars);
       }

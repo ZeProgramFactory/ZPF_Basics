@@ -1,5 +1,5 @@
 # ZPF_Basics
-Basics for .Net ( .Net Standard 2.0 )
+Basics for .Net ( .Net Standard 2.1 )
 
 ## Features
  * Delphi like TIniFile (ini file management)
@@ -13,10 +13,58 @@ Basics for .Net ( .Net Standard 2.0 )
 [ ] ...
 
 
-
 ## Changelog  
+### Version 2.1.1.0 - 21/02/2025
+* ObservableObject
+* new implementation of BaseViewModel
+  *  add implementation of Singleton
+  *  add commands
+
+```csharp
+public class yourViewModel : BaseViewModel2<yourViewModel>
+{
+   public ICommand SimpleCommand { get; } 
+
+   public yourViewModel()
+   {
+      SimpleCommand = new RelayCommand(ExecuteSimpleCommand, CanExecuteSimpleCommand);
+   }
+
+   public string Hello()
+   {
+      return "Hello World!";
+   }
+
+   public string Toto { get => _toto; set => SetField(ref _toto, value); }
+   string _toto = "toto";
+
+
+   private void ExecuteSimpleCommand(object parameter)
+   {
+      // Your command execution logic here
+      Console.WriteLine("SimpleCommand executed with parameter: " + parameter);
+   }
+
+   private bool CanExecuteSimpleCommand(object parameter)
+   {
+      // Your logic to determine if the command can execute
+      return true; // or some condition
+   }
+}
+
+
+public class yourClass
+{
+   public void yourCode()
+   {
+      yourViewModel.Current.Hello();
+
+      yourViewModel.Current.Toto = "titi";
+   }
+}```
+
 ### Version 2.0.0.8 - 29/10/2020
-* Add: AuditTrail.WithStack() & AuditTrail.FromHere()
+ * Add: AuditTrail.WithStack() & AuditTrail.FromHere()
 
 
 ### Version 1.1.11 - 05/2020
@@ -24,8 +72,8 @@ Basics for .Net ( .Net Standard 2.0 )
 
 
 ### Version 1.1.10 - 09/2019
-* Add: DB_Attributes.TableNameAttribute
-* Add: EnumerableExtensions
+ * Add: DB_Attributes.TableNameAttribute
+ * Add: EnumerableExtensions
 
 
 ### Version 1.1.9 - 08/2019
