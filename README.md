@@ -21,7 +21,7 @@ Basics for .Net ( .Net Standard 2.1 )
   *  add commands
 
 ```csharp
-public class yourViewModel : BaseViewModel2<yourViewModel>
+public class yourViewModel : BaseViewModel<yourViewModel>
 {
    public ICommand SimpleCommand { get; } 
 
