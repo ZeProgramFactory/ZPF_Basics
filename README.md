@@ -61,7 +61,8 @@ public class yourClass
 
       yourViewModel.Current.Toto = "titi";
    }
-}```
+}
+```
 
 ### Version 2.0.0.8 - 29/10/2020
  * Add: AuditTrail.WithStack() & AuditTrail.FromHere()
