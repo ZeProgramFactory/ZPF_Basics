@@ -2,13 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <LangVersion>10</LangVersion>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.1.1.2</Version>
+    <Version>2.1.1.5</Version>
     <Authors>ZPF (Michael Engelmann)</Authors>
     <Company>ZPF (ME, CHM)</Company>
-    <Description>Basics based on .Net Standard 2.1</Description>
+    <Description>Basics based on .Net Standard 2.0</Description>
     <Copyright>Copyright 2017..2025</Copyright>
     <PackageProjectUrl>https://github.com/ZeProgramFactory/ZPF_Basics</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ZeProgramFactory/ZPF_Basics</RepositoryUrl>
@@ -32,10 +32,6 @@
     <Compile Include="..\AuditTrail\JSONAuditTrailWriter.cs" Link="AuditTrail\JSONAuditTrailWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
