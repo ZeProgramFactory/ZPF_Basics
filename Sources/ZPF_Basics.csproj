@@ -5,7 +5,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.1.1.5</Version>
+    <Version>2.1.1.10</Version>
     <Authors>ZPF (Michael Engelmann)</Authors>
     <Company>ZPF (ME, CHM)</Company>
     <Description>Basics based on .Net Standard 2.0</Description>
@@ -23,6 +23,9 @@
     <Compile Remove="CS\TStrings_UT.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Docs\README.md" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\AuditTrail\AuditTrail.cs" Link="AuditTrail\AuditTrail.cs" />
     <Compile Include="..\AuditTrail\AuditTrailViewModel.cs" Link="AuditTrail\AuditTrailViewModel.cs" />
     <Compile Include="..\AuditTrail\AuditTrail_App.cs" Link="AuditTrail\AuditTrail_App.cs" />
@@ -30,14 +33,13 @@
     <Compile Include="..\AuditTrail\FileAuditTrailWriter.cs" Link="AuditTrail\FileAuditTrailWriter.cs" />
     <Compile Include="..\AuditTrail\IAuditTrailWriter.cs" Link="AuditTrail\IAuditTrailWriter.cs" />
     <Compile Include="..\AuditTrail\JSONAuditTrailWriter.cs" Link="AuditTrail\JSONAuditTrailWriter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\README.md">
+    <Content Include="Docs\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.2" />
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
   </ItemGroup>
 </Project>
