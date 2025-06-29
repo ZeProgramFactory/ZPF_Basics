@@ -10,6 +10,7 @@ using System.Collections.Generic;
 /// 01/02/18 - ME  - --> Std: ZPF_Basics
 /// 22/01/25 - ME  - IsNotBusy
 /// 21/02/25 - ME  - --> "BaseViewModel2"
+/// 30/06/25 - ME  - ProgressBar;
 /// 
 /// 2005..2025 ZePocketForge.com, SAS ZPF, ZeProgFactory
 /// </summary>
@@ -143,7 +144,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
    /// <summary>
    /// Gets or sets a value indicating whether to log BusyTitle & BusySubTitle to the audit trail.
    /// </summary>
-   public bool LogToAuditTrail { get; private set; }
+   public bool LogToAuditTrail { get; set; }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
@@ -289,5 +290,26 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
-}
 
+   public delegate void EventHandler(bool show, int percent);
+
+   public event EventHandler OnProgressBar;
+
+   public void WriteProgressBar(int percent)
+   {
+      if (OnProgressBar != null)
+      {
+         OnProgressBar( true, percent );
+      }
+   }
+
+   public void HideProgressBar()
+   {
+      if (OnProgressBar != null)
+      {
+         OnProgressBar(false, 0);
+      }
+   }
+
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+}
