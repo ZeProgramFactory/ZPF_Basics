@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using ZPF;
 using System.Diagnostics;
 using ZPF.AT;
+using System.Collections.Generic;
 
 /// <summary>
 /// 14/01/18 - ME  - NETSTANDARD1_3
@@ -41,8 +42,10 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
             if (Debugger.IsAttached)
             {
                Debugger.Break();
-            };
-         };
+            }
+            ;
+         }
+         ;
       }
       catch (Exception ex)
       {
@@ -51,8 +54,10 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          if (Debugger.IsAttached)
          {
             Debugger.Break();
-         };
-      };
+         }
+         ;
+      }
+      ;
 
       return false;
    }
@@ -93,8 +98,10 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          if (Debugger.IsAttached)
          {
             Debugger.Break();
-         };
-      };
+         }
+         ;
+      }
+      ;
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
@@ -116,8 +123,10 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
             if (_DoEventsCallBack != null)
             {
                _DoEventsCallBack();
-            };
-         };
+            }
+            ;
+         }
+         ;
       }
    }
 
@@ -128,7 +137,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
    /// </summary>
    public bool IsNotBusy
    {
-      get { return ! _IsBusy; }
+      get { return !_IsBusy; }
       set
       {
          IsBusy = !value;
@@ -150,7 +159,8 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          if (SetField(ref _BusyTitle, value))
          {
             Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusyTitle });
-         };
+         }
+         ;
       }
    }
 
@@ -171,11 +181,13 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
                Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusySubTitle });
 
                _BusyHistory.Add(Prev);
-               while (_BusyHistory.Count > 7) _BusyHistory.Delete(0);
+               while (_BusyHistory.Count > 7) _BusyHistory.RemoveAt(0);
 
                OnPropertyChanged("BusyHistory");
-            };
-         };
+            }
+            ;
+         }
+         ;
       }
    }
 
@@ -185,8 +197,21 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 
    int _BusyCounter = 0;
 
-   private TStrings _BusyHistory = new TStrings();
-   public String BusyHistory { get => _BusyHistory.Text; set { _BusyHistory.Text = value; OnPropertyChanged(); } }
+   private List<string> _BusyHistory = new List<string>();
+   public String BusyHistory
+   {
+      get
+      {
+         string st = "";
+         foreach (var item in _BusyHistory)
+         {
+            st += item + Environment.NewLine;
+         }
+
+         return st;
+      }
+      //set { _BusyHistory.Text = value; OnPropertyChanged(); } 
+   }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
@@ -226,8 +251,9 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
       {
          BusyTitle = "working ...";
          BusySubTitle = "";
-         BusyHistory = "";
-      };
+
+         BusyHistory.Clean();
+      }
 
       Debug.WriteLine("DecBusy " + callerMemberName);
    }
