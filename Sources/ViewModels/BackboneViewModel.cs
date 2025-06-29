@@ -43,9 +43,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
             {
                Debugger.Break();
             }
-            ;
          }
-         ;
       }
       catch (Exception ex)
       {
@@ -55,9 +53,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          {
             Debugger.Break();
          }
-         ;
       }
-      ;
 
       return false;
    }
@@ -99,9 +95,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          {
             Debugger.Break();
          }
-         ;
       }
-      ;
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
@@ -124,9 +118,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
             {
                _DoEventsCallBack();
             }
-            ;
          }
-         ;
       }
    }
 
@@ -148,6 +140,11 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 
    public string DataPath { get; set; }
 
+   /// <summary>
+   /// Gets or sets a value indicating whether to log BusyTitle & BusySubTitle to the audit trail.
+   /// </summary>
+   public bool LogToAuditTrail { get; private set; }
+
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
    string _BusyTitle = "working ...";
@@ -158,9 +155,11 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
       {
          if (SetField(ref _BusyTitle, value))
          {
-            Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusyTitle });
+            if (LogToAuditTrail)
+            {
+               Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusyTitle });
+            }
          }
-         ;
       }
    }
 
@@ -178,16 +177,17 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
          {
             if (!string.IsNullOrEmpty(Prev))
             {
-               Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusySubTitle });
+               if (LogToAuditTrail)
+               {
+                  Log.Write(new AuditTrail { Level = ErrorLevel.Log, Message = _BusySubTitle });
+               }
 
                _BusyHistory.Add(Prev);
                while (_BusyHistory.Count > 7) _BusyHistory.RemoveAt(0);
 
                OnPropertyChanged("BusyHistory");
             }
-            ;
          }
-         ;
       }
    }
 
