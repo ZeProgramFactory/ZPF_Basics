@@ -157,9 +157,16 @@ public class AuditTrailViewModel : BaseViewModel<AuditTrailViewModel>
 
       // https://github.com/VOIP-PARTNERS/CallBooster/issues/118
       // https://appcenter.ms/orgs/VOIP-PARTNERS/apps/CallBooster-1/crashes/errors/2244476178u/overview
+      // bug wsMShop ???
+
       if (Logs.Count > 0)
       {
-         Logs.Insert(0, message);
+         // workarround ???
+         try
+         {
+            Logs.Insert(0, message);
+         }
+         catch { };
       }
       else
       {
