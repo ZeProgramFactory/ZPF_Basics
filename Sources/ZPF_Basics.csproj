@@ -5,7 +5,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.1.1.14</Version>
+    <Version>2.1.1.16</Version>
     <Authors>ZPF (Michael Engelmann)</Authors>
     <Company>ZPF (ME, CHM)</Company>
     <Description>Basics based on .Net Standard 2.0</Description>

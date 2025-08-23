@@ -1,4 +1,6 @@
-﻿namespace ZPF
+﻿using System;
+
+namespace ZPF
 {
    public interface IVersionInfo
    {
