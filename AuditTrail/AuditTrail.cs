@@ -97,10 +97,10 @@ LIMIT 100;
 
                   DataOut = "!" + ex.Message + Environment.NewLine
                   + Environment.NewLine
-                  + "#StackTrace" + Environment.NewLine
+                  + "# StackTrace" + Environment.NewLine
                   + ex.StackTrace + Environment.NewLine
                   + Environment.NewLine
-                  + "#Source" + Environment.NewLine
+                  + "# Source" + Environment.NewLine
                   + ex.Source;
                   break;
 
