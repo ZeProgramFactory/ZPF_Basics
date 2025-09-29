@@ -188,6 +188,12 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 
                OnPropertyChanged("BusyHistory");
             }
+
+            if (string.IsNullOrEmpty(_BusySubTitle))
+            {
+               _BusyHistory.Clear();
+               OnPropertyChanged("BusyHistory");
+            }
          }
       }
    }
