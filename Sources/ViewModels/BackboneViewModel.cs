@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using ZPF;
-using System.Diagnostics;
-using ZPF.AT;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using ZPF;
+using ZPF.AT;
 
 /// <summary>
 /// 14/01/18 - ME  - NETSTANDARD1_3
@@ -11,8 +12,9 @@ using System.Collections.Generic;
 /// 22/01/25 - ME  - IsNotBusy
 /// 21/02/25 - ME  - --> "BaseViewModel2"
 /// 30/06/25 - ME  - ProgressBar;
+/// 06/02/26 - ME  - Interlocked.(In|De)crement _BusyCounter
 /// 
-/// 2005..2025 ZePocketForge.com, SAS ZPF, ZeProgFactory
+/// 2005..2026 ZePocketForge.com, SAS ZPF, ZeProgFactory
 /// </summary>
 public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 {
@@ -241,7 +243,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
    /// <param name="callerMemberName"></param>
    public void IncBusy([CallerMemberName] string callerMemberName = null)
    {
-      _BusyCounter++;
+      Interlocked.Increment( ref  _BusyCounter );
       IsBusy = !Silent && (_BusyCounter > 0);
 
       Debug.WriteLine("IncBusy " + callerMemberName);
@@ -249,7 +251,7 @@ public class BackboneViewModel : BaseViewModel<BackboneViewModel>
 
    public void DecBusy([CallerMemberName] string callerMemberName = null)
    {
-      _BusyCounter--;
+      Interlocked.Decrement( ref _BusyCounter );
       IsBusy = !Silent && (_BusyCounter > 0);
 
       if (_BusyCounter < 0) _BusyCounter = 0;
