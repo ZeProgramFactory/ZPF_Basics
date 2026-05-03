@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ZPF.AT;
 
@@ -67,6 +68,7 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
          }
 
          // - - -  - - - 
+         // - - -  - - - 
 
          IntPtr hwnd = FindWindow("MauiMessageReceiverWindow", null);
 
@@ -79,6 +81,8 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
          Line = System.Text.Json.JsonSerializer.Serialize(message);
 
          SendString(hwnd, Line);
+
+         // - - -  - - - 
       }
       catch (Exception ex)
       {
@@ -98,6 +102,24 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
       WriteLine(sender, at);
    }
 
+   #region - - - POST - - -
+
+   string url = "http://<receiver-ip>:5000/log/";
+   static readonly HttpClient client = new HttpClient();
+
+   private async void SendString(string json)
+   {
+      var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+      var response = await client.PostAsync(url, content);
+
+      Console.WriteLine("Server replied: " + await response.Content.ReadAsStringAsync());
+   }
+
+   #endregion
+
+
+   #region - - - WinAPI Interop - - -
 
    private void SendString(IntPtr hwnd, string message)
    {
@@ -137,4 +159,6 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
 
    [DllImport("user32.dll")]
    private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+   #endregion
 }
