@@ -131,14 +131,15 @@ LIMIT 100;
       // - - -  - - - 
 
       [DB_Attributes.PrimaryKey(true)]
+      [DB_Attributes.Show(false)]
       public Int64 PK { get; set; }
 
       [DB_Attributes.Index()]
       public DateTime TimeStamp { get; set; }
+
       [JsonIgnore]
-      public DateTime TimeStampApp { get; set; }
-      [JsonIgnore]
-      public DateTime TimeStampDB { get; set; }
+      [DB_Attributes.Show(false)]
+      public DateTime TimeStampServer { get; set; }
 
       [DB_Attributes.Index()]
       public ErrorLevel Level { get; set; }

@@ -121,10 +121,10 @@ public class AuditTrailViewModel : BaseViewModel<AuditTrailViewModel>
    private void CompleteMessage(ref AuditTrail message)
    {
       message.FKUser = FKUser;
-      if (message.TimeStampApp == DateTime.MinValue) message.TimeStampApp = DateTime.Now;
+      if (message.TimeStampServer == DateTime.MinValue) message.TimeStampServer = DateTime.Now;
       if (string.IsNullOrEmpty(message.Application)) message.Application = AuditTrailViewModel.Current.Application;
       if (string.IsNullOrEmpty(message.TerminalID)) message.TerminalID = AuditTrailViewModel.Current.TerminalID;
-      if (string.IsNullOrEmpty(message.TerminalIP)) message.TerminalID = AuditTrailViewModel.Current.TerminalIP;
+      if (string.IsNullOrEmpty(message.TerminalIP)) message.TerminalIP = AuditTrailViewModel.Current.TerminalIP;
       if (string.IsNullOrEmpty(message.ItemID)) message.ItemID = AuditTrailViewModel.Current.ItemID;
       if (string.IsNullOrEmpty(message.ItemType)) message.ItemType = AuditTrailViewModel.Current.ItemType;
    }
