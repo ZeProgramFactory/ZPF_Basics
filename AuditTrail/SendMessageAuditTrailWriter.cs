@@ -123,6 +123,11 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
 
    private void SendString(IntPtr hwnd, string message)
    {
+      if (!OperatingSystem.IsWindows())
+      {
+         return;
+      }
+
       byte[] bytes = System.Text.Encoding.Unicode.GetBytes(message + "\0");
 
       IntPtr buffer = Marshal.AllocHGlobal(bytes.Length);
