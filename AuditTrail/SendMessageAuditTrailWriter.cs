@@ -11,15 +11,15 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
    private readonly string outputFile;
    private readonly bool DebugOutput;
 
-   private readonly string host = "localhost"; // or IP address of the receiver
+   public static string host = "localhost"; // or IP address of the receiver
 
-   enum SendMethods
+   public enum SendMethods
    {
       WinAPI,
       HttpPost
    }
 
-   private readonly SendMethods SendMethod = SendMethods.WinAPI;
+   public static SendMethods SendMethod = SendMethods.WinAPI;
 
    /// <summary>
    /// 
