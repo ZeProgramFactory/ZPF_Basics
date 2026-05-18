@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 
 namespace ZPF.AT;
 
@@ -9,6 +10,16 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
 {
    private readonly string outputFile;
    private readonly bool DebugOutput;
+
+   private readonly string host = "localhost"; // or IP address of the receiver
+
+   enum SendMethods
+   {
+      WinAPI,
+      HttpPost
+   }
+
+   private readonly SendMethods SendMethod = SendMethods.WinAPI;
 
    /// <summary>
    /// 
@@ -70,17 +81,39 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
          // - - -  - - - 
          // - - -  - - - 
 
-         IntPtr hwnd = FindWindow("MauiMessageReceiverWindow", null);
-
-         if (hwnd == IntPtr.Zero)
+         if (SendMethod == SendMethods.WinAPI)
          {
-            //StatusLabel.Text = "Receiver not found";
-            return;
+            IntPtr hwnd = FindWindow("MauiMessageReceiverWindow", null);
+
+            if (hwnd == IntPtr.Zero)
+            {
+               //StatusLabel.Text = "Receiver not found";
+               return;
+            }
+
+            Line = System.Text.Json.JsonSerializer.Serialize(message);
+
+            SendString(hwnd, Line);
          }
+         else
+         {
+            _ = Task.Run(async () =>
+            {
+               try
+               {
+                  string json = JsonSerializer.Serialize(message);
+                  var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-         Line = System.Text.Json.JsonSerializer.Serialize(message);
+                  using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(300)); // fast timeout
 
-         SendString(hwnd, Line);
+                  await client.PostAsync($"http://{host}:5000/log/", content, cts.Token);
+               }
+               catch
+               {
+                  // swallow errors: server offline, timeout, etc.
+               }
+            });
+         }
 
          // - - -  - - - 
       }
