@@ -83,17 +83,20 @@ public class SendMessageAuditTrailWriter : IAuditTrailWriter
 
          if (SendMethod == SendMethods.WinAPI)
          {
-            IntPtr hwnd = FindWindow("MauiMessageReceiverWindow", null);
-
-            if (hwnd == IntPtr.Zero)
+            if (OperatingSystem.IsWindows())
             {
-               //StatusLabel.Text = "Receiver not found";
-               return;
+               IntPtr hwnd = FindWindow("MauiMessageReceiverWindow", null);
+
+               if (hwnd == IntPtr.Zero)
+               {
+                  //StatusLabel.Text = "Receiver not found";
+                  return;
+               }
+
+               Line = System.Text.Json.JsonSerializer.Serialize(message);
+
+               SendString(hwnd, Line);
             }
-
-            Line = System.Text.Json.JsonSerializer.Serialize(message);
-
-            SendString(hwnd, Line);
          }
          else
          {
