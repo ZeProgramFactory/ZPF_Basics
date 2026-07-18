@@ -30,10 +30,16 @@ namespace ZPF
       /// </summary>
       string FullPath { get; set; }
 
+      long FileSize { get; set; }
+
+      DateTime FileDate { get; set; }
+
       /// <summary>
       /// DateTime >= Creation 
       /// </summary>
       DateTime UpdatedOn { get; set; }
+
+      string UpdatedBy { get; set; }
 
       // - - -  - - - 
 
