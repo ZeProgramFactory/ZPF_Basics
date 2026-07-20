@@ -6,9 +6,9 @@ namespace ZPF
    public interface IDocument
    {
       /// <summary>
-      /// GUID for everyone
+      /// Primary Key - GUID for everyone
       /// </summary>
-      string GUID { get; set; }
+      string PK { get; set; }
 
       /// <summary>
       /// Attached to a record of 'ExtType'
@@ -24,6 +24,8 @@ namespace ZPF
       /// Title
       /// </summary>
       string Title { get; set; }
+
+      public string FileName { get; set; }
 
       /// <summary>
       /// Document full path (at least fileName with extension)
