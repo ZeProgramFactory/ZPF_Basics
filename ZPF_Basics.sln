@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34112.27
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12023.133 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPF_Basics", "Sources\ZPF_Basics.csproj", "{732BDEC6-1015-49C9-9CB3-74C8F9985432}"
 EndProject
@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Docs\Colors.xlsx = Docs\Colors.xlsx
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPF_TStrings", "ZPF_TStrings\ZPF_TStrings.csproj", "{E86BD46B-F671-EDBE-3255-9CEFF14244D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF0FEFF-3753-4A1F-97FE-7EC9978E5E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86BD46B-F671-EDBE-3255-9CEFF14244D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86BD46B-F671-EDBE-3255-9CEFF14244D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86BD46B-F671-EDBE-3255-9CEFF14244D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86BD46B-F671-EDBE-3255-9CEFF14244D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

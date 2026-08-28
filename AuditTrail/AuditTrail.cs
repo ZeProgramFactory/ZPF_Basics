@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Net.Http.Headers;
@@ -59,7 +61,7 @@ LIMIT 100;
 
       // - - -  - - - 
 
-      public static TStrings Dico = TStrings.FromJSon("[{\"1\":\"Log\"}, {\"2\":\"Info\"}, {\"3\":\"Error\"}, {\"4\":\"Critical\"} ]");
+      public static List<string> Dico = new List<string> { "Log", "Info", "Error", "Critical" };
       public enum TextFormat { Txt = 0, TxtEx = 1, HTML = 2 }
 
       // - - -  - - - 
@@ -107,7 +109,7 @@ LIMIT 100;
                case TextFormat.HTML:
                   DataOutType = "HTML";
 
-                  TStrings html = new TStrings();
+                  List<string> html = new List<string>();
 
                   html.Add("<p style='font-family: Consolas,monospace; bgcolor=transparent;'>");
                   html.Add(string.Format("{0}</br>", "Message"));
@@ -120,7 +122,7 @@ LIMIT 100;
                   html.Add(string.Format("<b>{0}</b></br></br>", ex.Source));
                   html.Add("</p>");
 
-                  DataOut = html.Text;
+                  DataOut = string.Join( Environment.NewLine, html);
                   break;
             };
          };
@@ -152,11 +154,11 @@ LIMIT 100;
          {
             switch (Level)
             {
-               case ErrorLevel.Log: return Dico["1"];
-               case ErrorLevel.Info: return Dico["2"];
-               case ErrorLevel.Error: return Dico["3"];
-               case ErrorLevel.Critical: return Dico["4"];
-               default: return Dico["4"];
+               case ErrorLevel.Log: return Dico[0];
+               case ErrorLevel.Info: return Dico[1];
+               case ErrorLevel.Error: return Dico[2];
+               case ErrorLevel.Critical: return Dico[3];
+               default: return Dico[3];
             };
          }
       }
@@ -258,8 +260,8 @@ LIMIT 100;
 
       public static AuditTrail FromHere(ErrorLevel errorLevel, string tag, string message)
       {
-         TStrings st = new TStrings();
-         st.Text = Environment.StackTrace;
+         List<string> st = new List<string>();
+         st.Add(Environment.StackTrace);
 
          var data = st[2];
          if (string.IsNullOrEmpty(data))
@@ -279,13 +281,13 @@ LIMIT 100;
 
       public static AuditTrail WithStack(ErrorLevel errorLevel, string tag, string message)
       {
-         TStrings st = new TStrings();
-         st.Text = Environment.StackTrace;
+         List<string> st = new List<string>();
+         st.Add(Environment.StackTrace);
 
          if (st.Count > 3)
          {
-            st.Delete(0);
-            st.Delete(0);
+            st.RemoveAt(0);
+            st.RemoveAt(0);
          };
 
          return new AuditTrail
@@ -294,7 +296,7 @@ LIMIT 100;
             Tag = tag,
             Message = message,
             DataInType = "TXT",
-            DataIn = st.Text,
+            DataIn = string.Join(Environment.NewLine, st),
          };
       }
 

@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using ZPF.AT;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace ZPF
 {
@@ -20,7 +21,7 @@ namespace ZPF
       public static string wsServer = "";
       public static string wsServerDoc = "";
       public static HttpClient _httpClient = null;
-      public static TStrings Logs = new TStrings();
+      public static List<string> Logs = new List<string>();
 
       public static bool Init()
       {

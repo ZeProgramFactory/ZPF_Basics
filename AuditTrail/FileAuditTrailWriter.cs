@@ -27,16 +27,17 @@ namespace ZPF.AT
       {
          try
          {
-            TStrings Lines = new TStrings();
+            List<string> Lines = new List<string>();
 
-            Lines.LoadFromFile(outputFile);
+            Lines.AddRange(System.IO.File.ReadAllLines(outputFile));
 
             while (Lines.Count > sender.MaxLines)
             {
-               Lines.Delete(0);
+               Lines.RemoveAt(0);
             };
 
-            Lines.SaveToFile(outputFile, System.Text.Encoding.ASCII);
+            var text = string.Join(Environment.NewLine, Lines);
+            System.IO.File.WriteAllText(outputFile, text, System.Text.Encoding.ASCII);
          }
          catch (Exception ex)
          {

@@ -2,8 +2,6 @@
 Basics for .Net ( .Net Standard 2.1 )
 
 ## Features
- * Delphi like TIniFile (ini file management)
- * Delphi like TStrings (list of strings)
  * ObjectExtensions
  * StringExtensions
  * BaseViewModel class for an basic MVVM (Model View ViewModel) implemention

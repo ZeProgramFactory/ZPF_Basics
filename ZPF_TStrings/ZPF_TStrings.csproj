@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <LangVersion>10</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>2.1.1.20</Version>
+    <Authors>ZPF (Michael Engelmann)</Authors>
+    <Company>ZPF (ME, CHM)</Company>
+    <Description>Basics based on .Net Standard 2.0</Description>
+    <Copyright>Copyright 2017..2026</Copyright>
+    <PackageProjectUrl>https://github.com/ZeProgramFactory/ZPF_Basics</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ZeProgramFactory/ZPF_Basics</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>C#, Basics</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="CS\StringExtensions_UT.cs" />
+    <Compile Remove="CS\TIniFile_UT.cs" />
+    <Compile Remove="CS\TStrings_UT.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Docs\README.md">
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Pack>True</Pack>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="10.0.10" />
+  </ItemGroup>
+</Project>
